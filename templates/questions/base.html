@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{% block meta_title %}Ask_Kiryanenko{% endblock %}</title>
+    <title>{% block meta_title %}Ask Kiryanenko{% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -19,35 +19,28 @@
 <body>
 
 <nav class="navbar navbar-toggleable-md fixed-top navbar-inverse bg-inverse">
+    <a class="navbar-brand" href="/">Ask Kiryanenko</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">Navbar</a>
-
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav`-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <form class="form-inline mr-sm-4 w-100">
+            <input class="form-control w-100" type="text" placeholder="Поиск">
         </form>
+        <button class="btn btn-outline-success mr-sm-4 my-2 my-lg-0" type="submit">Задать вопрос</button>
+
+        <div class="navbar-nav my-2 my-lg-0">
+            <div class="nav-item dropdown btn-group">
+                <a href="#" class="mr-2"><img src="{% static 'questions/images/user.png' %}" class="avatar-sm"></a>
+                <a class="nav-link active" href="#">Kiryanenko</a>
+                <a class="nav-link dropdown-toggle dropdown-toggle-split" id="accaunt" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="true"><span class="sr-only">Toggle Dropdown</span></a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accaunt">
+                    <a class="dropdown-item" href="#">Настройки</a>
+                    <a class="dropdown-item" href="#">Выйти</a>
+                </div>
+            </div>
+        </div>
     </div>
 </nav>
 
@@ -56,24 +49,56 @@
     <div class="row">
 
         <div class="col-md-9">
-            <h1>{% block title %}{% endblock %}</h1>
+            <h1>{% block title %}{% endblock %}</h1><hr>
             {% block content %}{% endblock %}
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-
         </div><!--/span-->
 
-        <div class="col-md-3 sidebar-offcanvas" id="sidebar">
-            <div class="list-group">
-                <a href="#" class="list-group-item active">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
+        <div class="col-md-3">
+            <div class="card text-center mb-3">
+                <div class="card-block">
+                    <h4 class="card-title">Популярные теги</h4>
+                    <p class="card-text">
+                        <a class="btn btn-link" href="#">quick</a>
+                        <a class="btn btn-link" href="#">Card</a>
+                        <a class="btn btn-link" href="#">Популярные</a>
+                        <a class="btn btn-link" href="#">link</a>
+                        <a class="btn btn-link" href="#">Card</a>
+                        <a class="btn btn-link" href="#">Популярные</a>
+                        <a class="btn btn-link" href="#">link</a>
+                        <a class="btn btn-link" href="#">Card</a>
+                        <a class="btn btn-link" href="#">Card</a>
+                        <a class="btn btn-link" href="#">Популярные</a>
+                        <a class="btn btn-link" href="#">quick</a>
+                        <a class="btn btn-link" href="#">Card</a>
+                        <a class="btn btn-link" href="#">Популярные</a>
+                        <a class="btn btn-link" href="#">link</a>
+                        <a class="btn btn-link" href="#">Card</a>
+                        <a class="btn btn-link" href="#">Популярные</a>
+                        <a class="btn btn-link" href="#">link</a>
+                        <a class="btn btn-link" href="#">Card</a>
+                        <a class="btn btn-link" href="#">Card</a>
+                        <a class="btn btn-link" href="#">Популярные</a>
+                    </p>
+                </div>
+            </div>
+            <div class="card text-center mb-3">
+                <div class="card-block">
+                    <h4 class="card-title">Популярные пользователи</h4>
+                    <p class="card-text ">
+                    <ol class="text-left">
+                        <li><a class="btn btn-link" href="#">quick</a></li>
+                        <li><a class="btn btn-link" href="#">пользовател</a></li>
+                        <li><a class="btn btn-link" href="#">quick</a></li>
+                        <li><a class="btn btn-link" href="#">link</a></li>
+                        <li><a class="btn btn-link" href="#">quick</a></li>
+                        <li><a class="btn btn-link" href="#">пользовател</a></li>
+                        <li><a class="btn btn-link" href="#">quick</a></li>
+                        <li><a class="btn btn-link" href="#">Card</a></li>
+                        <li><a class="btn btn-link" href="#">quick</a></li>
+                        <li><a class="btn btn-link" href="#">link</a></li>
+                    </ol>
+                    </p>
+                </div>
             </div>
         </div><!--/span-->
     </div><!--/row-->
@@ -81,7 +106,7 @@
     <hr>
 
     <footer>
-        <p>&copy; Company 2017</p>
+        <p>&copy; Кирьяненко Александр Владиславович 2017</p>
     </footer>
 
 </div><!--/.container-->
