@@ -4,6 +4,10 @@
     Задать вопрос
 {% endblock %}
 {% block content %}
+    <div class="alert alert-danger" role="alert">
+        <strong>Oh snap!</strong> Change a few things up and try submitting again.
+    </div>
+
     <form>
         <div class="form-group">
             <label>Заголовок вопроса</label>
@@ -12,7 +16,7 @@
         </div>
         <div class="form-group">
             <label>Текст вопроса</label>
-            <textarea class="form-control" rows="3"></textarea>
+            <textarea class="form-control" rows="4"></textarea>
             <small class="form-text text-muted">Здесь можно указать описание Вашего вопроса</small>
         </div>
         <div class="form-group">

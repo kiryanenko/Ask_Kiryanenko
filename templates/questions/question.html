@@ -1,0 +1,93 @@
+{% extends "questions/base.html" %}
+{% load staticfiles %}
+{% block title %}
+    {{ question.title }}
+{% endblock %}
+{% block content %}
+    <table class="w-100"><tr>
+        <td class="pr-2 text-center" style="width: 160px;">
+            <a href="#"><img class="avatar-lg" src="{% static 'questions/images/user.png' %}"></a>
+
+            <form class="form-inline btn-group mt-3">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-btn"><button class="btn btn-outline-danger" type="button">-</button></span>
+                    <input type="text" class="form-control text-success rating-input" value="123" disabled>
+                    <span class="input-group-btn"><button class="btn btn-outline-success" type="button">+</button></span>
+                </div>
+            </form>
+        </td>
+        <td>
+            <p class="card-text">{{ question.text }}</p>
+            <p> Теги:
+                {% for tag in tags %}
+                    <a href="#"><span class="badge badge-default">{{ tag }}</span></a>
+                {% endfor %}
+            </p>
+        </td>
+    </tr></table>
+    <hr>
+
+    {% for answer in answers %}
+        <div class="card my-2">
+            <div class="card-block">
+                <table class="w-100"><tr>
+                    <td class="pr-2 text-center" style="width: 100px;">
+                        <a href="#"><img class="avatar-md" src="{% static 'questions/images/user.png' %}"></a>
+
+                        <form class="form-inline btn-group mt-3">
+                            <div class="input-group input-group-sm">
+                            <span class="input-group-btn">
+                                <button class="btn btn-outline-danger" type="button">-</button>
+                            </span>
+                                <input type="text" class="form-control text-success rating-input" value="{{ answer.rating }}" disabled>
+                                <span class="input-group-btn">
+                                <button class="btn btn-outline-success" type="button">+</button>
+                            </span>
+                            </div>
+                        </form>
+                    </td>
+                    <td class="pl-2">
+                        <p class="card-text">{{ answer.text }}</p>
+                        <form>
+                            <div class="form-group has-success">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">Верно!</span>
+                                </label>
+                            </div>
+                        </form>
+                    </td>
+                </tr></table>
+            </div>
+        </div>
+    {% endfor %}
+
+    <nav aria-label="Page navigation" class="my-3">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <hr>
+
+    <form>
+        <div class="form-group">
+            <textarea class="form-control" rows="3" placeholder="Напишите Ваш ответ здесь..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Ответить</button>
+    </form>
+{% endblock %}

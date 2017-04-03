@@ -11,3 +11,12 @@
     width: 84px;
     height: 84px;
 }
+
+.avatar-lg {
+    width: 140px;
+    height: 140px;
+}
+
+.rating-input {
+    width: 44px !important;
+}
