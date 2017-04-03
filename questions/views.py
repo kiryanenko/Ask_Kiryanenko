@@ -7,3 +7,8 @@ def index(request):
     return render(request, 'questions/index.html', {
 
     })
+
+def add_question(request):
+    return render(request, 'questions/add_question.html', {
+
+    })
