@@ -20,25 +20,37 @@
 
 <nav class="navbar navbar-toggleable-md fixed-top navbar-inverse bg-inverse">
     <a class="navbar-brand" href="/">Ask Kiryanenko</a>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <div class="collapse navbar-collapse" id="navbar">
         <form class="form-inline mr-sm-4 w-100">
             <input class="form-control w-100" type="text" placeholder="Поиск">
         </form>
-        <button class="btn btn-outline-success mr-sm-4 my-2 my-lg-0" type="submit">Задать вопрос</button>
+        <button class="btn btn-outline-success mr-sm-4 my-2 my-lg-0">Задать вопрос</button>
 
         <div class="navbar-nav my-2 my-lg-0">
             <div class="nav-item dropdown btn-group">
-                <a href="#" class="mr-2"><img src="{% static 'questions/images/user.png' %}" class="avatar-sm"></a>
-                <a class="nav-link active" href="#">Kiryanenko</a>
-                <a class="nav-link dropdown-toggle dropdown-toggle-split" id="accaunt" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="true"><span class="sr-only">Toggle Dropdown</span></a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accaunt">
-                    <a class="dropdown-item" href="#">Настройки</a>
-                    <a class="dropdown-item" href="#">Выйти</a>
-                </div>
+                {% if 0 %}
+                    <a href="#" class="mr-2"><img src="{% static 'questions/images/user.png' %}" class="avatar-sm"></a>
+                    <a class="nav-link active" href="#">Kiryanenko</a>
+                    <a class="nav-link dropdown-toggle dropdown-toggle-split" id="accaunt" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="true"><span class="sr-only">Toggle Dropdown</span></a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accaunt">
+                        <a class="dropdown-item" href="#">Настройки</a>
+                        <a class="dropdown-item" href="#">Выйти</a>
+                    </div>
+                {% else %}
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info">Войти</button>
+                        <button type="button" class="btn btn-outline-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#">Регистрация</a>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
