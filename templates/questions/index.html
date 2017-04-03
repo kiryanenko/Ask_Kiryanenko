@@ -1,9 +1,113 @@
 {% extends "questions/base.html" %}
+{% load staticfiles %}
 {% block title %}
-    Главная
+    Новые вопросы
+    <a href="#" class="btn btn-link">Топ вопросов</a>
 {% endblock %}
 {% block content %}
-    <div class="question">
-        fff
+    <div class="card my-2">
+        <div class="card-block">
+            <table class="w-100"><tr>
+                <td class="pr-2 text-center" style="width: 100px;">
+                    <img class="avatar-md" src="{% static 'questions/images/user.png' %}">
+                    <form class="form-inline">
+                        <input class="rating-input form-control mt-3" type="number" value="42" id="rating">
+                    </form>
+                </td>
+                <td>
+                    <a href="#"><h4 class="card-title">Card title?</h4></a>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content. Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="card-link mr-3">Ответы (3)</a>
+                    Теги:
+                    <a href="#"><span class="badge badge-default">Another link</span></a>
+                    <a href="#"><span class="badge badge-default">Another</span></a>
+                    <a href="#"><span class="badge badge-default">link</span></a>
+                </td>
+            </tr></table>
+        </div>
     </div>
+
+    <div class="card my-2">
+        <div class="card-block">
+            <table class="w-100"><tr>
+                <td class="pr-2 text-center" style="width: 100px;">
+                    <img class="avatar-md" src="{% static 'questions/images/user.png' %}">
+                    <form class="form-inline">
+                        <input class="rating-input form-control mt-3" type="number" value="42" id="rating">
+                    </form>
+                </td>
+                <td>
+                    <a href="#"><h4 class="card-title">Card title?</h4></a>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content. Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="card-link mr-3">Ответы (3)</a>
+                    Теги:
+                    <a href="#"><span class="badge badge-default">Another link</span></a>
+                    <a href="#"><span class="badge badge-default">Another</span></a>
+                    <a href="#"><span class="badge badge-default">link</span></a>
+                </td>
+            </tr></table>
+        </div>
+    </div>
+    <div class="card my-2">
+        <div class="card-block">
+            <table class="w-100"><tr>
+                <td class="pr-2 text-center" style="width: 100px;">
+                    <img class="avatar-md" src="{% static 'questions/images/user.png' %}">
+                    <form class="form-inline">
+                        <input class="rating-input form-control mt-3" type="number" value="42" id="rating">
+                    </form>
+                </td>
+                <td>
+                    <a href="#"><h4 class="card-title">Card title?</h4></a>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content. Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="card-link mr-3">Ответы (3)</a>
+                    Теги:
+                    <a href="#"><span class="badge badge-default">Another link</span></a>
+                    <a href="#"><span class="badge badge-default">Another</span></a>
+                    <a href="#"><span class="badge badge-default">link</span></a>
+                </td>
+            </tr></table>
+        </div>
+    </div>
+    <div class="card my-2">
+        <div class="card-block">
+            <table class="w-100"><tr>
+                <td class="pr-2 text-center" style="width: 100px;">
+                    <img class="avatar-md" src="{% static 'questions/images/user.png' %}">
+                    <form class="form-inline">
+                        <input class="rating-input form-control mt-3" type="number" value="42" id="rating">
+                    </form>
+                </td>
+                <td>
+                    <a href="#"><h4 class="card-title">Card title?</h4></a>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content. Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="card-link mr-3">Ответы (3)</a>
+                    Теги:
+                    <a href="#"><span class="badge badge-default">Another link</span></a>
+                    <a href="#"><span class="badge badge-default">Another</span></a>
+                    <a href="#"><span class="badge badge-default">link</span></a>
+                </td>
+            </tr></table>
+        </div>
+    </div>
+
+    <nav aria-label="Page navigation" class="my-3">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 {% endblock %}
