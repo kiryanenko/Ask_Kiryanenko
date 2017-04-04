@@ -35,3 +35,8 @@ def login(request):
     return render(request, 'questions/login.html', {
 
     })
+
+def signup(request):
+    return render(request, 'questions/signup.html', {
+
+    })
