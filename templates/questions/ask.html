@@ -11,7 +11,7 @@
     <form>
         <div class="form-group">
             <label>Заголовок вопроса</label>
-            <input type="text" class="form-control" aria-describedby="Введите заголовок вопроса" placeholder="Введите заголовок вопроса">
+            <input type="text" class="form-control" maxlength="100" placeholder="Введите заголовок вопроса">
             <small class="form-text text-muted">Вопрос должен быть меньше 100 символов, и оканчиваться знаком вопроса "?"</small>
         </div>
         <div class="form-group">
@@ -21,7 +21,7 @@
         </div>
         <div class="form-group">
             <label>Теги к вопросу</label>
-            <input type="text" class="form-control" placeholder="Теги к вопросу">
+            <input type="text" class="form-control" placeholder="Теги к вопросу" maxlength="50">
             <small class="form-text text-muted">Вы можете к вопросу добавить до трёх тегов. Вводить через запятую ","</small>
         </div>
         <button type="submit" class="btn btn-primary">Задать вопрос</button>

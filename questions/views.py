@@ -31,3 +31,7 @@ def question(request):
         'answers': answers,
     })
 
+def login(request):
+    return render(request, 'questions/login.html', {
+
+    })
