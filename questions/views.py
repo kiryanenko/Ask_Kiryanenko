@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
 
@@ -39,4 +40,10 @@ def login(request):
 def signup(request):
     return render(request, 'questions/signup.html', {
 
+    })
+
+def hello_world(request):
+    return render(request, 'questions/hello_world.html', {
+        'GET': request.GET,
+        'POST': request.POST
     })

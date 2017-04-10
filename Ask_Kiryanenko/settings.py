@@ -25,7 +25,7 @@ SECRET_KEY = '+pt_aj4_0pwy*%%38=)_amx3i3f#p(a&s^f$g3f)46i5_uc4si'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [u'127.0.0.5']
 
 
 # Application definition
@@ -122,3 +122,4 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join('static'), )
+

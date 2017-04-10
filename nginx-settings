@@ -1,0 +1,29 @@
+server {
+    listen 80;
+    server_name 127.0.0.5; #либо ip, либо доменное имя
+    access_log  /var/log/nginx/example.log;
+    gzip on;
+    gzip_types text/html text/css application/x-javascript text/plain text/xml image/x-icon;
+
+    location ^~ /uploads/ {
+        root /home/kiryanenko/Projects/Ask_Kiryanenko/;
+        expires 4h;
+    }
+    
+    location ^~ /static/ {
+        root /home/kiryanenko/Projects/Ask_Kiryanenko/;
+        expires 48h;
+    }
+    
+    location ~ ^.+\.(jpg|jpeg|gif|png|js|css) {
+        root /home/kiryanenko/Projects/Ask_Kiryanenko/static/;
+        expires 24h;
+    }
+
+    location / {
+        proxy_pass http://127.0.0.1:8000; 
+        proxy_set_header Host $server_name;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+  }
