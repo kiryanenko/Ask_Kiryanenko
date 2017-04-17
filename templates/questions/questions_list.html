@@ -1,0 +1,33 @@
+{% load staticfiles %}
+{% for question in questions %}
+    <div class="card my-2">
+        <div class="card-block">
+            <table class="w-100"><tr>
+                <td class="pr-2 text-center" style="width: 100px;">
+                    <a href="#"><img class="avatar-md" src="{{ question.user.avatar.url }}"></a>
+
+                    <form class="form-inline btn-group mt-3">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-btn">
+                                <button class="btn btn-outline-danger" type="button">-</button>
+                            </span>
+                            <input type="text" class="form-control text-success rating-input" value="123" disabled>
+                            <span class="input-group-btn">
+                                <button class="btn btn-outline-success" type="button">+</button>
+                            </span>
+                        </div>
+                    </form>
+                </td>
+                <td>
+                    <a href="question.html"><h4 class="card-title">{{ question.title|truncatechars:90 }}</h4></a>
+                    <p class="card-text">{{ question.text|truncatechars_html:430 }}</p>
+                    <a href="#" class="card-link mr-3">Ответы (3)</a>
+                    Теги:
+                    <a href="#"><span class="badge badge-default">Another link</span></a>
+                    <a href="#"><span class="badge badge-default">Another</span></a>
+                    <a href="#"><span class="badge badge-default">link</span></a>
+                </td>
+            </tr></table>
+        </div>
+    </div>
+{% endfor %}

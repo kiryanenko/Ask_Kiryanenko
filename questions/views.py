@@ -1,10 +1,16 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
+from questions.models import Question
 
-
-# Create your views here.
+# Cписок новых вопросов (главная страница)
 def index(request):
+    questions = Question.objects.all()
+    return render(request, 'questions/index.html', {
+        'questions': questions
+    })
+
+def hot(request):
     return render(request, 'questions/index.html', {
 
     })

@@ -25,7 +25,7 @@ SECRET_KEY = '+pt_aj4_0pwy*%%38=)_amx3i3f#p(a&s^f$g3f)46i5_uc4si'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [u'127.0.0.5']
+ALLOWED_HOSTS = [u'127.0.0.5', u'127.0.0.1']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'questions',
 ]
 
 MIDDLEWARE = [
@@ -76,8 +77,10 @@ WSGI_APPLICATION = 'Ask_Kiryanenko.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ask_kiryanenko',
+        'USER': 'ask_kiryanenko',
+        'PASSWORD': '123456',
     }
 }
 
@@ -123,3 +126,5 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join('static'), )
 
+MEDIA_ROOT = os.path.join('uploads')
+MEDIA_URL = '/uploads/'
