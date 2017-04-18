@@ -32,7 +32,7 @@ def paginate(request, objects_list, default_limit=10, pages_count=None):
 
 # Cписок новых вопросов (главная страница)
 def index(request):
-    questions = Question.objects.all()
+    questions = Question.objects.order_by('-created_at')
     page, page_range = paginate(request, questions, default_limit=20, pages_count=7)
     return render(request, 'questions/index.html', {
         'questions': page.object_list,
@@ -41,8 +41,12 @@ def index(request):
     })
 
 def hot(request):
-    return render(request, 'questions/index.html', {
-
+    questions = Question.objects.order_by('-rating')
+    page, page_range = paginate(request, questions, default_limit=20, pages_count=7)
+    return render(request, 'questions/hot.html', {
+        'questions': page.object_list,
+        'page': page,
+        'page_range': page_range,
     })
 
 def ask(request):

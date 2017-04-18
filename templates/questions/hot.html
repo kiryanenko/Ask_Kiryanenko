@@ -1,9 +1,9 @@
 {% extends "questions/base.html" %}
 {% load staticfiles %}
-{% block title %}Новые вопросы{% endblock %}
+{% block title %}Топ вопросов{% endblock %}
 {% block header %}
-    Новые вопросы
-    <a href="{% url 'hot' %}" class="btn btn-link">Топ вопросов</a>
+    Топ вопросов
+    <a href="{% url 'index' %}" class="btn btn-link">Новые вопросы</a>
 {% endblock %}
 {% block content %}
     {% include 'questions/questions_list.html' %}

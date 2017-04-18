@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{% block meta_title %}Ask Kiryanenko{% endblock %}</title>
+    <title>{% block title %}Ask Kiryanenko{% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -63,7 +63,7 @@
     <div class="row">
 
         <div class="col-md-9">
-            <h1>{% block title %}{% endblock %}</h1><hr>
+            <h1>{% block header %}{% endblock %}</h1><hr>
             {% block content %}{% endblock %}
         </div><!--/span-->
 

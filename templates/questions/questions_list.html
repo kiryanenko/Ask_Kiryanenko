@@ -11,7 +11,9 @@
                             <span class="input-group-btn">
                                 <button class="btn btn-outline-danger" type="button">-</button>
                             </span>
-                            <input type="text" class="form-control text-success rating-input" value="123" disabled>
+                            <input type="text" class="form-control rating-input text-center
+                                        {% if question.rating >= 0 %}text-success{% else %}text-danger{% endif %}"
+                                   value="{{ question.rating }}" disabled>
                             <span class="input-group-btn">
                                 <button class="btn btn-outline-success" type="button">+</button>
                             </span>
