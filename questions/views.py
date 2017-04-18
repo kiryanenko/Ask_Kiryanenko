@@ -1,31 +1,43 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render
-from django.shortcuts import HttpResponse
-from django.http import HttpResponseBadRequest, HttpResponseNotFound
+from django.shortcuts import render, HttpResponse
+from django.http import HttpResponseBadRequest, HttpResponseNotFound, Http404
 from questions.models import Question
-import math
+from django.core.paginator import Paginator, EmptyPage
 
-def paginate(objects_list, request, objects_count_per_page):
-    page_count = math.ceil(len(objects_list) / objects_count_per_page)
-    page = request.GET.get('page') or 1
+# Функция пагинации
+def paginate(request, objects_list, default_limit=10, pages_count=None):
     try:
-        page = int(page)
-        if page > page_count:
-            raise IndexError
+        limit = int(request.GET.get('limit', default_limit))
     except ValueError:
-        return HttpResponseBadRequest()
-    except IndexError:
-        return HttpResponseNotFound()
-    start_object = (page - 1) * objects_count_per_page
-    objects_page = objects_list[start_object:start_object + objects_count_per_page]
-    paginator = [p for p in range(page - 2, page + 3) if p > 0 and p <= page_count]
-    return objects_page, paginator
+        limit = default_limit
+    if limit > 100:
+        limit = default_limit
+    try:
+        page = int(request.GET.get('page', 1))
+    except ValueError:
+        raise Http404
+    paginator = Paginator(objects_list, limit)
+    try:
+        page = paginator.page(page)
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)
+    if not pages_count:
+        page_range = paginator.page_range
+    else:
+        start = page.number - int(pages_count / 2) - 1
+        if start < 0:
+            start = 0
+        page_range = paginator.page_range[start: page.number + int(pages_count / 2)]
+    return page, page_range
 
 # Cписок новых вопросов (главная страница)
 def index(request):
     questions = Question.objects.all()
+    page, page_range = paginate(request, questions, default_limit=20, pages_count=7)
     return render(request, 'questions/index.html', {
-        'questions': questions
+        'questions': page.object_list,
+        'page': page,
+        'page_range': page_range,
     })
 
 def hot(request):
