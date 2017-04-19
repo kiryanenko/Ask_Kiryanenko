@@ -66,10 +66,9 @@ def tag(request, tag_name=None):
         'page_range': page_range,
     })
 
+# Форма создания вопроса (URL = /ask/)
 def ask(request):
-    return render(request, 'questions/ask.html', {
-
-    })
+    return render(request, 'questions/ask.html', {})
 
 # Cтраница одного вопроса со списком ответов (URL = /question/35/)
 def question(request, question_id=None):
@@ -86,15 +85,13 @@ def question(request, question_id=None):
         'page_range': page_range,
     })
 
+# Форма логина (URL = /login/)
 def login(request):
-    return render(request, 'questions/login.html', {
+    return render(request, 'questions/login.html', {})
 
-    })
-
+# Форма регистрации (URL = /signup/)
 def signup(request):
-    return render(request, 'questions/signup.html', {
-
-    })
+    return render(request, 'questions/signup.html', {})
 
 def hello_world(request):
     return render(request, 'questions/hello_world.html', {
