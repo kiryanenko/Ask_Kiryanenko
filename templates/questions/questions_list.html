@@ -20,15 +20,17 @@
                     </form>
                 </td>
                 <td>
-                    <a href="question.html"><h4 class="card-title">{{ question.title|truncatechars:90 }}</h4></a>
+                    <a href="{% url 'question' question.id %}">
+                        <h4 class="card-title">{{ question.title|truncatechars:90 }}</h4>
+                    </a>
                     <p class="card-text">{{ question.text|truncatechars_html:430 }}</p>
-                    <a href="#" class="card-link mr-3">Ответы (3)</a>
+                    <a href="{% url 'question' question.id %}" class="card-link mr-3">
+                        Ответы ({{ question.answers.count }})
+                    </a>
                     {% if question.tags.count > 0 %}
                         Теги:
                         {% for tag in question.tags.all %}
-                            <a href="{% url 'tag' tag.name %}">
-                                <span class="badge badge-default">{{ tag.name }}</span>
-                            </a>
+                            <a href="{% url 'tag' tag.name %}"><span class="badge badge-default">{{ tag.name }}</span></a>
                         {% endfor %}
                     {% endif %}
                 </td>

@@ -7,7 +7,7 @@ urlpatterns = [
     url(r'^hot', views.hot, name='hot'),
     url(r'^tag/(?P<tag_name>.+)/', views.tag, name='tag'),
     url(r'^ask', views.ask, name='ask'),
-    url(r'^question', views.question, name='question'),
+    url(r'^question/(?P<question_id>\d+)/', views.question, name='question'),
     url(r'^login', views.login, name='login'),
     url(r'^signup', views.signup, name='signup'),
     url(r'^hello_world', views.hello_world),

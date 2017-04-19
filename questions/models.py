@@ -24,6 +24,15 @@ class Question(models.Model):
     tags = models.ManyToManyField(Tag)
 
     def __str__(self):
-        return '{}, user: {}, updated_at: {}'.format(self.title, self.user, self.updated_at)
+        return '{}; user: {}; updated_at: {}'.format(self.title, self.user, self.updated_at)
 
+class Answers(models.Model):
+    text = models.TextField()
+    rating = models.IntegerField(default=0)
+    question = models.ForeignKey(Question, related_name='answers')
+    user = models.ForeignKey(Profile)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return '{}; updated_at: {}; {}'.format(self.user, self.updated_at, self.text)

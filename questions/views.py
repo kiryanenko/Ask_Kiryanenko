@@ -71,22 +71,19 @@ def ask(request):
 
     })
 
-def question(request):
-    q = {
-        'title': 'Заголовок вопроса?',
-        'text': 'Some quick example text to build on the card title and make up the bulk of the card. Example. ' * 3,
-        'rating': 123
-    }
-    tags = ['Some', 'quick', 'example']
-    answers = [{
-        'text': 'Some quick example text to build on the card title and make up the bulk of the card. Example. ' * 3,
-        'rating': 123
-    }, ] * 15
-
+# Cтраница одного вопроса со списком ответов (URL = /question/35/)
+def question(request, question_id=None):
+    try:
+        q = Question.objects.get(id=question_id)
+    except ObjectDoesNotExist:
+        return HttpResponseBadRequest()
+    answers = q.answers.order_by('-created_at')
+    page, page_range = paginate(request, answers, default_limit=30, pages_count=7)
     return render(request, 'questions/question.html', {
         'question': q,
-        'tags': tags,
-        'answers': answers,
+        'answers': page.object_list,
+        'page': page,
+        'page_range': page_range,
     })
 
 def login(request):
