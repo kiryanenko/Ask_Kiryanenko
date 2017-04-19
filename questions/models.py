@@ -22,7 +22,7 @@ class Question(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField(Tag)
-    correct_answer = models.OneToOneField('Answer', related_name='+', null=True)
+    correct_answer = models.OneToOneField('Answer', related_name='+', null=True, blank=True)
 
     def __str__(self):
         return '{}; user: {}; updated_at: {}'.format(self.title, self.user, self.updated_at)
