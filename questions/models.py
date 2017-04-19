@@ -22,6 +22,7 @@ class Question(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField(Tag)
+    correct_answer = models.OneToOneField('Answer', related_name='+', null=True)
 
     def __str__(self):
         return '{}; user: {}; updated_at: {}'.format(self.title, self.user, self.updated_at)
@@ -36,3 +37,13 @@ class Answer(models.Model):
 
     def __str__(self):
         return '{}; updated_at: {}; {}'.format(self.user, self.updated_at, self.text)
+
+class Question_like(models.Model):
+    user = models.ForeignKey(Profile)
+    question = models.ForeignKey(Question)
+    is_like = models.BooleanField()
+
+class Answer_like(models.Model):
+    user = models.ForeignKey(Profile)
+    answer = models.ForeignKey(Answer)
+    is_like = models.BooleanField()
