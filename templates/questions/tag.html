@@ -1,8 +1,7 @@
 {% extends "questions/base.html" %}
-{% block title %}Топ вопросов{% endblock %}
+{% block title %}Вопросов по тэгу "{{ tag.name }}"{% endblock %}
 {% block header %}
-    Топ вопросов
-    <a href="{% url 'index' %}" class="btn btn-link">Новые вопросы</a>
+    Вопросов по тэгу "{{ tag.name }}"
 {% endblock %}
 {% block content %}
     {% include 'questions/questions_list.html' %}

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, HttpResponse
 from django.http import HttpResponseBadRequest, HttpResponseNotFound, Http404
-from questions.models import Question
+from questions.models import Profile, Question, Tag
 from django.core.paginator import Paginator, EmptyPage
+from django.core.exceptions import ObjectDoesNotExist
 
 # Функция пагинации
 def paginate(request, objects_list, default_limit=10, pages_count=None):
@@ -30,7 +31,7 @@ def paginate(request, objects_list, default_limit=10, pages_count=None):
         page_range = paginator.page_range[start: page.number + int(pages_count / 2)]
     return page, page_range
 
-# Cписок новых вопросов (главная страница)
+# Cписок новых вопросов (главная страница) (URL = /)
 def index(request):
     questions = Question.objects.order_by('-created_at')
     page, page_range = paginate(request, questions, default_limit=20, pages_count=7)
@@ -40,10 +41,26 @@ def index(request):
         'page_range': page_range,
     })
 
+# Cписок “лучших” вопросов (URL = /hot/)
 def hot(request):
     questions = Question.objects.order_by('-rating')
     page, page_range = paginate(request, questions, default_limit=20, pages_count=7)
     return render(request, 'questions/hot.html', {
+        'questions': page.object_list,
+        'page': page,
+        'page_range': page_range,
+    })
+
+# Cписок вопросов по тэгу (URL = /tag/blablabla/)
+def tag(request, tag_name=None):
+    try:
+        tag = Tag.objects.get(name=tag_name)
+    except ObjectDoesNotExist:
+        return HttpResponseBadRequest()
+    questions = tag.question_set.order_by('-created_at')
+    page, page_range = paginate(request, questions, default_limit=20, pages_count=7)
+    return render(request, 'questions/tag.html', {
+        'tag': tag,
         'questions': page.object_list,
         'page': page,
         'page_range': page_range,

@@ -1,4 +1,3 @@
-{% load staticfiles %}
 {% for question in questions %}
     <div class="card my-2">
         <div class="card-block">
@@ -24,10 +23,14 @@
                     <a href="question.html"><h4 class="card-title">{{ question.title|truncatechars:90 }}</h4></a>
                     <p class="card-text">{{ question.text|truncatechars_html:430 }}</p>
                     <a href="#" class="card-link mr-3">Ответы (3)</a>
-                    Теги:
-                    <a href="#"><span class="badge badge-default">Another link</span></a>
-                    <a href="#"><span class="badge badge-default">Another</span></a>
-                    <a href="#"><span class="badge badge-default">link</span></a>
+                    {% if question.tags.count > 0 %}
+                        Теги:
+                        {% for tag in question.tags.all %}
+                            <a href="{% url 'tag' tag.name %}">
+                                <span class="badge badge-default">{{ tag.name }}</span>
+                            </a>
+                        {% endfor %}
+                    {% endif %}
                 </td>
             </tr></table>
         </div>
