@@ -9,7 +9,7 @@ class Profile(User):
     objects = UserManager()
 
 class Tag(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20, unique=True)
 
     def __str__(self):
         return self.name
@@ -26,7 +26,7 @@ class Question(models.Model):
     def __str__(self):
         return '{}; user: {}; updated_at: {}'.format(self.title, self.user, self.updated_at)
 
-class Answers(models.Model):
+class Answer(models.Model):
     text = models.TextField()
     rating = models.IntegerField(default=0)
     question = models.ForeignKey(Question, related_name='answers')
