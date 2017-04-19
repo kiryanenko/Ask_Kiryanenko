@@ -1,0 +1,6 @@
+{% if question.tags.count > 0 %}
+    Теги:
+    {% for tag in question.tags.all %}
+        <a href="{% url 'tag' tag.name %}"><span class="badge badge-default">{{ tag.name }}</span></a>
+    {% endfor %}
+{% endif %}

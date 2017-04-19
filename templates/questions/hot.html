@@ -5,6 +5,6 @@
     <a href="{% url 'index' %}" class="btn btn-link">Новые вопросы</a>
 {% endblock %}
 {% block content %}
-    {% include 'questions/questions_list.html' %}
-    {% include 'questions/paginator.html' %}
+    {% include 'questions/includes/questions_list.html' %}
+    {% include 'questions/includes/paginator.html' %}
 {% endblock %}

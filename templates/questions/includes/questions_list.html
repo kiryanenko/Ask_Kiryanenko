@@ -1,0 +1,22 @@
+{% for question in questions %}
+    <div class="card my-2">
+        <div class="card-block">
+            <table class="w-100"><tr>
+                <td class="pr-2 text-center" style="width: 100px;">
+                    <a href="#"><img class="avatar-md" src="{{ question.user.avatar.url }}"></a>
+                    {% include 'questions/includes/rating_form.html' with rating=question.rating action='#' %}
+                </td>
+                <td>
+                    <a href="{% url 'question' question.id %}">
+                        <h4 class="card-title">{{ question.title|truncatechars:90 }}</h4>
+                    </a>
+                    <p class="card-text">{{ question.text|truncatechars_html:430 }}</p>
+                    <a href="{% url 'question' question.id %}" class="card-link mr-3">
+                        Ответы ({{ question.answers.count }})
+                    </a>
+                    {% include 'questions/includes/tags_list.html' with question=question %}
+                </td>
+            </tr></table>
+        </div>
+    </div>
+{% endfor %}

@@ -1,0 +1,13 @@
+<form class="form-inline btn-group mt-3" action="{{ action }}">
+    <div class="input-group input-group-sm">
+        <span class="input-group-btn">
+            <button class="btn btn-outline-danger" type="button">-</button>
+        </span>
+        <input type="text" class="form-control rating-input text-center
+                    {% if rating >= 0 %}text-success{% else %}text-danger{% endif %}"
+               value="{{ rating }}" disabled>
+        <span class="input-group-btn">
+            <button class="btn btn-outline-success" type="button">+</button>
+        </span>
+    </div>
+</form>

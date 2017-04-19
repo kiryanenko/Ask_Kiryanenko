@@ -1,31 +1,15 @@
 {% extends "questions/base.html" %}
-{% load staticfiles %}
-{% block title %}
-    {{ question.title }}
-{% endblock %}
+{% block title %}{{ question.title }}{% endblock %}
+{% block header %}{{ question.title }}{% endblock %}
 {% block content %}
     <table class="w-100"><tr>
         <td class="pr-2 text-center" style="width: 160px;">
-            <a href="#"><img class="avatar-lg" src="{% static 'questions/images/user.png' %}"></a>
-
-            <form class="form-inline btn-group mt-3">
-                <div class="input-group input-group-sm">
-                    <span class="input-group-btn"><button class="btn btn-outline-danger" type="button">-</button></span>
-                    <input type="text" class="form-control text-success rating-input" value="123" disabled>
-                    <span class="input-group-btn"><button class="btn btn-outline-success" type="button">+</button></span>
-                </div>
-            </form>
+            <img class="avatar-lg" src="{{ question.user.avatar.url }}">
+            {% include 'questions/includes/rating_form.html' with rating=question.rating action='#' %}
         </td>
         <td>
             <p class="card-text">{{ question.text }}</p>
-            <p>
-                {% if question.tags.count > 0 %}
-                    Теги:
-                    {% for tag in question.tags.all %}
-                        <a href="{% url 'tag' tag.name %}"><span class="badge badge-default">{{ tag.name }}</span></a>
-                    {% endfor %}
-                {% endif %}
-            </p>
+            <p>{% include 'questions/includes/tags_list.html' %}</p>
         </td>
     </tr></table>
     <hr>
@@ -36,19 +20,8 @@
                 <div class="card-block">
                     <table class="w-100"><tr>
                         <td class="pr-2 text-center" style="width: 100px;">
-                            <a href="#"><img class="avatar-md" src="{% static 'questions/images/user.png' %}"></a>
-
-                            <form class="form-inline btn-group mt-3">
-                                <div class="input-group input-group-sm">
-                            <span class="input-group-btn">
-                                <button class="btn btn-outline-danger" type="button">-</button>
-                            </span>
-                                    <input type="text" class="form-control text-success rating-input" value="{{ answer.rating }}" disabled>
-                                    <span class="input-group-btn">
-                                <button class="btn btn-outline-success" type="button">+</button>
-                            </span>
-                                </div>
-                            </form>
+                            <a href="#"><img class="avatar-md" src="{{ question.user.avatar.url }}"></a>
+                            {% include 'questions/includes/rating_form.html' with rating=answer.rating action='#' %}
                         </td>
                         <td class="pl-2">
                             <p class="card-text">{{ answer.text }}</p>
@@ -66,7 +39,7 @@
                 </div>
             </div>
         {% endfor %}
-        {% include 'questions/paginator.html' %}
+        {% include 'questions/includes/paginator.html' %}
         <hr>
     {% endif %}
 
