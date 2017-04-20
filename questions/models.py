@@ -21,7 +21,7 @@ class Question(models.Model):
     rating = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, null=True, blank=True)
     correct_answer = models.OneToOneField('Answer', related_name='+', null=True, blank=True)
 
     def __str__(self):
