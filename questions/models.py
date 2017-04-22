@@ -14,6 +14,13 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+class Question_manager(models.Manager):
+    def last_questions(self):
+        return self.order_by('-created_at')
+
+    def hot_questions(self):
+        return self.order_by('-rating')
+
 class Question(models.Model):
     title = models.CharField(max_length=200)
     text = models.TextField()
@@ -23,9 +30,14 @@ class Question(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField(Tag, null=True, blank=True)
     correct_answer = models.OneToOneField('Answer', related_name='+', null=True, blank=True)
+    objects = Question_manager()
 
     def __str__(self):
         return '{}; user: {}; updated_at: {}'.format(self.title, self.user, self.updated_at)
+
+class Answer_manager(models.Manager):
+    def last_answers(self):
+        return self.order_by('-created_at')
 
 class Answer(models.Model):
     text = models.TextField()
@@ -34,6 +46,7 @@ class Answer(models.Model):
     user = models.ForeignKey(Profile)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects = Answer_manager()
 
     def __str__(self):
         return '{}; updated_at: {}; {}'.format(self.user, self.updated_at, self.text)

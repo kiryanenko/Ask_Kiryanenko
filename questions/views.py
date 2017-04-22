@@ -33,7 +33,7 @@ def paginate(request, objects_list, default_limit=10, pages_count=None):
 
 # Cписок новых вопросов (главная страница) (URL = /)
 def index(request):
-    questions = Question.objects.order_by('-created_at')
+    questions = Question.objects.last_questions()
     page, page_range = paginate(request, questions, default_limit=20, pages_count=7)
     return render(request, 'questions/index.html', {
         'questions': page.object_list,
@@ -43,7 +43,7 @@ def index(request):
 
 # Cписок “лучших” вопросов (URL = /hot/)
 def hot(request):
-    questions = Question.objects.order_by('-rating')
+    questions = Question.objects.hot_questions()
     page, page_range = paginate(request, questions, default_limit=20, pages_count=7)
     return render(request, 'questions/hot.html', {
         'questions': page.object_list,
@@ -57,7 +57,7 @@ def tag(request, tag_name=None):
         tag = Tag.objects.get(name=tag_name)
     except ObjectDoesNotExist:
         return HttpResponseBadRequest()
-    questions = tag.question_set.order_by('-created_at')
+    questions = tag.question_set.last_questions()
     page, page_range = paginate(request, questions, default_limit=20, pages_count=7)
     return render(request, 'questions/tag.html', {
         'tag': tag,
@@ -76,7 +76,7 @@ def question(request, question_id=None):
         q = Question.objects.get(id=question_id)
     except ObjectDoesNotExist:
         return HttpResponseBadRequest()
-    answers = q.answers.order_by('-created_at')
+    answers = q.answers.last_answers()
     page, page_range = paginate(request, answers, default_limit=30, pages_count=7)
     return render(request, 'questions/question.html', {
         'question': q,
