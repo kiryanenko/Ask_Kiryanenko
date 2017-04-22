@@ -17,6 +17,7 @@ def paginate(request, objects_list, default_limit=10, pages_count=None):
         page = int(request.GET.get('page', 1))
     except ValueError:
         raise Http404
+
     paginator = Paginator(objects_list, limit)
     try:
         page = paginator.page(page)
@@ -25,7 +26,7 @@ def paginate(request, objects_list, default_limit=10, pages_count=None):
     if not pages_count:
         page_range = paginator.page_range
     else:
-        start = page.number - int(pages_count / 2) - 1
+        start = page.number - pages_count // 2 - 1
         if start < 0:
             start = 0
         page_range = paginator.page_range[start: page.number + int(pages_count / 2)]
