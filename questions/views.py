@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.http import HttpResponseBadRequest, HttpResponseNotFound, Http404
 from questions.models import Profile, Question, Tag
 from django.core.paginator import Paginator, EmptyPage
@@ -53,10 +53,7 @@ def hot(request):
 
 # Cписок вопросов по тэгу (URL = /tag/blablabla/)
 def tag(request, tag_name=None):
-    try:
-        tag = Tag.objects.get(name=tag_name)
-    except ObjectDoesNotExist:
-        return HttpResponseBadRequest()
+    tag = get_object_or_404(Tag, name=tag_name)
     questions = tag.question_set.last_questions()
     page, page_range = paginate(request, questions, default_limit=20, pages_count=7)
     return render(request, 'questions/tag.html', {
@@ -72,10 +69,7 @@ def ask(request):
 
 # Cтраница одного вопроса со списком ответов (URL = /question/35/)
 def question(request, question_id=None):
-    try:
-        q = Question.objects.get(id=question_id)
-    except ObjectDoesNotExist:
-        return HttpResponseBadRequest()
+    q = get_object_or_404(Question, id=question_id)
     answers = q.answers.last_answers()
     page, page_range = paginate(request, answers, default_limit=30, pages_count=7)
     return render(request, 'questions/question.html', {
