@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, HttpResponse, get_object_or_404
-from django.http import HttpResponseBadRequest, HttpResponseNotFound, Http404
+from django.http import HttpResponseBadRequest, HttpResponseNotFound, Http404, HttpResponseRedirect
 from questions.models import Profile, Question, Tag
+from questions.forms import SignUpForm
 from django.core.paginator import Paginator, EmptyPage
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -94,7 +95,16 @@ def login(request):
 
 # Форма регистрации (URL = /signup/)
 def signup(request):
-    return render(request, 'questions/signup.html', {})
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = SignUpForm()
+    return render(request, 'questions/signup.html', {
+        'form': form
+    })
 
 
 def hello_world(request):

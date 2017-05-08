@@ -2,54 +2,5 @@
 {% block title %}Форма регистрации{% endblock %}
 {% block header %}Форма регистрации{% endblock %}
 {% block content %}
-    {% for error in form.non_field_errors %}
-    <div class="alert alert-danger" role="alert">
-        <strong>Ошибка!</strong> {{ error }}
-    </div>
-    {% endfor %}
-
-    <form action="{% url 'signup' %}">
-        <div class="form-group row">
-            <label class="col-md-3 col-form-label">{{ form.login.label }}</label>
-            <div class="col-md-5">
-                <input name="{{ form.login.html_name }}" type="text" class="form-control" maxlength="20"
-                       placeholder="dr_pepper">
-                <small class="form-text text-muted">Логин должен быть меньше 20 символов, и состоять только из латинских смиволов</small>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-3 col-form-label">E-mail</label>
-            <div class="col-md-5">
-                <input type="email" class="form-control" placeholder="example@mail.ru">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-3 col-form-label">Ник</label>
-            <div class="col-md-5">
-                <input type="text" class="form-control" maxlength="20" placeholder="Dr. Pepper">
-                <small class="form-text text-muted">Будет отображаться в вопросахи и ответах. Ник должен быть меньше 20 символов.</small>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-3 col-form-label">Пароль</label>
-            <div class="col-md-5">
-                <input type="password" class="form-control" maxlength="50" placeholder="Введите Ваш пароль">
-                <small class="form-text text-muted">Пароль должен быть не меньше 6 символов.</small>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-3 col-form-label">Повтор пароля</label>
-            <div class="col-md-5">
-                <input type="password" class="form-control" maxlength="50" placeholder="Повторите пароль">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-3 col-form-label">Аватар</label>
-            <div class="col-md-5">
-                <input type="file" class="form-control-file" aria-describedby="fileHelp">
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Войти</button>
-        <a href="signup" class="btn btn-link">Регистрация</a>
-    </form>
+    {% include 'questions/includes/form.html' with action='signup' method='POST' is_columns=True button='Регистрация' %}
 {% endblock %}

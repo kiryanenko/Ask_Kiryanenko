@@ -1,0 +1,19 @@
+{% for error in form.non_field_errors %}
+    <div class="alert alert-danger" role="alert">
+        <strong>Ошибка!</strong> {{ error }}
+    </div>
+{% endfor %}
+
+<form action="{% url action %}" method="{{ method }}">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="form-group {% if is_columns %}row{% endif %} {% if field.errors %}has-danger{% endif %}">
+            <label class="{% if is_columns %}col-md-3{% endif %} col-form-label">{{ field.label }}</label>
+            <div class="{% if is_columns %}col-md-5{% endif %}">
+                {{ field }}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+            </div>
+        </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">{{ button }}</button>
+</form>
