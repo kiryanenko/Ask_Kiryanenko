@@ -5,6 +5,7 @@ from questions.models import Profile, Question, Tag
 from django.core.paginator import Paginator, EmptyPage
 from django.core.exceptions import ObjectDoesNotExist
 
+
 # Функция пагинации
 def paginate(request, objects_list, default_limit=10, pages_count=None):
     try:
@@ -32,6 +33,7 @@ def paginate(request, objects_list, default_limit=10, pages_count=None):
         page_range = paginator.page_range[start: page.number + int(pages_count / 2)]
     return page, page_range
 
+
 # Cписок новых вопросов (главная страница) (URL = /)
 def index(request):
     questions = Question.objects.last_questions()
@@ -42,6 +44,7 @@ def index(request):
         'page_range': page_range,
     })
 
+
 # Cписок “лучших” вопросов (URL = /hot/)
 def hot(request):
     questions = Question.objects.hot_questions()
@@ -51,6 +54,7 @@ def hot(request):
         'page': page,
         'page_range': page_range,
     })
+
 
 # Cписок вопросов по тэгу (URL = /tag/blablabla/)
 def tag(request, tag_name=None):
@@ -64,9 +68,11 @@ def tag(request, tag_name=None):
         'page_range': page_range,
     })
 
+
 # Форма создания вопроса (URL = /ask/)
 def ask(request):
     return render(request, 'questions/ask.html', {})
+
 
 # Cтраница одного вопроса со списком ответов (URL = /question/35/)
 def question(request, question_id=None):
@@ -80,13 +86,16 @@ def question(request, question_id=None):
         'page_range': page_range,
     })
 
+
 # Форма логина (URL = /login/)
 def login(request):
     return render(request, 'questions/login.html', {})
 
+
 # Форма регистрации (URL = /signup/)
 def signup(request):
     return render(request, 'questions/signup.html', {})
+
 
 def hello_world(request):
     return render(request, 'questions/hello_world.html', {

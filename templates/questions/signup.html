@@ -1,24 +1,26 @@
 {% extends "questions/base.html" %}
-{% load staticfiles %}
 {% block title %}Форма регистрации{% endblock %}
 {% block header %}Форма регистрации{% endblock %}
 {% block content %}
+    {% for error in form.non_field_errors %}
     <div class="alert alert-danger" role="alert">
-        <strong>Oh snap!</strong> Change a few things up and try submitting again.
+        <strong>Ошибка!</strong> {{ error }}
     </div>
+    {% endfor %}
 
-    <form>
+    <form action="{% url 'signup' %}">
         <div class="form-group row">
-            <label class="col-md-3 col-form-label">Логин</label>
+            <label class="col-md-3 col-form-label">{{ form.login.label }}</label>
             <div class="col-md-5">
-                <input type="text" class="form-control" maxlength="20" placeholder="dr_pepper">
+                <input name="{{ form.login.html_name }}" type="text" class="form-control" maxlength="20"
+                       placeholder="dr_pepper">
                 <small class="form-text text-muted">Логин должен быть меньше 20 символов, и состоять только из латинских смиволов</small>
             </div>
         </div>
         <div class="form-group row">
             <label class="col-md-3 col-form-label">E-mail</label>
             <div class="col-md-5">
-                <input type="email" class="form-control" maxlength="50" placeholder="example@mail.ru">
+                <input type="email" class="form-control" placeholder="example@mail.ru">
             </div>
         </div>
         <div class="form-group row">

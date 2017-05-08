@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, UserManager
 
 
 class Profile(User):
+    nick_name = models.CharField(max_length=20)
     avatar = models.ImageField(upload_to='avatars', default='avatars/user.png')
     # Use UserManager to get the create_user method, etc.
     objects = UserManager()
