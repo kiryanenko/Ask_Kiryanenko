@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.core.management.base import BaseCommand, CommandError
-from questions.models import Profile, Question, Tag, Answer, Question_like, Answer_like
+from questions.models import Profile, Question, Tag, Answer, QuestionLike, AnswerLike
 import random
 import time
 
@@ -84,7 +84,7 @@ class Command(BaseCommand):
 
         # Создание лайков вопросов
         for _ in range(0, 200):
-            like = Question_like(
+            like = QuestionLike(
                 question=random.choice(questions),
                 user=random.choice(users),
                 is_like=bool(random.randint(0, 1))
@@ -98,7 +98,7 @@ class Command(BaseCommand):
 
         # Создание лайков ответов
         for _ in range(0, 200):
-            like = Answer_like(
+            like = AnswerLike(
                 answer=random.choice(answers),
                 user=random.choice(users),
                 is_like=bool(random.randint(0, 1))
