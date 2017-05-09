@@ -1,6 +1,7 @@
 from django import forms
-from questions.models import Profile, Question, Tag
-
+from questions.models import Question, Tag
+from django.contrib import auth
+from django.contrib.auth.models import User
 
 # Функция добавляющая css классы к полям формы
 def css_classes(form):
@@ -25,16 +26,29 @@ class SignUpForm(forms.Form):
         super(SignUpForm, self).__init__(*args, **kwargs)
         css_classes(self)
 
+    def clean_username(self):
+        if User.objects.filter(username=self.cleaned_data['username']).exists():
+            raise forms.ValidationError(u'Пользователь с таким логином уже есть.', code='username_exist')
+        return self.cleaned_data['username']
+
+    def clean_password(self):
+        if len(self.cleaned_data['password']) < 3:
+            raise forms.ValidationError(u'Пароль должен быть не меньше 6 символов.', code='len_password')
+        return self.cleaned_data['password']
+
     def clean(self):
-        if self.cleaned_data['password'] != self.cleaned_data['repeat_password']:
-            raise forms.ValidationError(
-                u'Повторный пароль не совпал'
-            )
+        cleaned_data = super(SignUpForm, self).clean()
+        password = cleaned_data.get('password')
+        repeat_password = cleaned_data.get('repeat_password')
+        if password and repeat_password and password != repeat_password:
+            raise forms.ValidationError(u'Повторный пароль не совпал.', code='repeat_password')
 
     def save(self):
-        user_kwargs = self.cleaned_data
-        del user_kwargs['repeat_password']
-        user = Profile(**user_kwargs)
+        user_kw = self.cleaned_data
+        user = User.objects.create_user(user_kw['username'], password=user_kw['password'], email=user_kw['email'])
+        user.profile.nick_name = user_kw['nick_name']
+        if user_kw['avatar']:
+            user.profile.avatar = user_kw['avatar']
         user.save()
         return user
 
@@ -48,5 +62,10 @@ class LoginForm(forms.Form):
         super(LoginForm, self).__init__(*args, **kwargs)
         css_classes(self)
 
+    def clean(self):
+        user = self.auth()
+        if not user:
+            raise forms.ValidationError(u'Неправильный логин или пароль.', code='auth')
+
     def auth(self):
-        return authenticate(username='john', password='secret')
+        return auth.authenticate(username=self.cleaned_data['username'], password=self.cleaned_data['password'])

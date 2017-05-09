@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.http import HttpResponseBadRequest, HttpResponseNotFound, Http404, HttpResponseRedirect
-from questions.models import Profile, Question, Tag
+from questions.models import Question, Tag
 from questions.forms import SignUpForm, LoginForm
 from django.core.paginator import Paginator, EmptyPage
 from django.core.exceptions import ObjectDoesNotExist
@@ -101,27 +101,30 @@ def login(request):
     url = get_continue(request)
     if request.method == "POST":
         form = LoginForm(request.POST)
-        user = form.auth()
-        if user is not None:
+        if form.is_valid():
+            auth.login(request, form.auth())
             return HttpResponseRedirect(url)
     else:
         form = LoginForm()
     return render(request, 'questions/login.html', {
-        'form': form
+        'form': form,
+        'continue_url': url,
     })
 
 
 # Форма регистрации (URL = /signup/)
 def signup(request):
+    url = get_continue(request)
     if request.method == "POST":
-        form = SignUpForm(request.POST)
+        form = SignUpForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('login')
+            return HttpResponseRedirect('/login?continue=' + url)
     else:
         form = SignUpForm()
     return render(request, 'questions/signup.html', {
-        'form': form
+        'form': form,
+        'continue_url': url
     })
 
 

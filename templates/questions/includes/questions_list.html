@@ -3,7 +3,7 @@
         <div class="card-block">
             <table class="w-100"><tr>
                 <td class="pr-2 text-center" style="width: 100px;">
-                    <a href="#"><img class="avatar-md" src="{{ question.user.avatar.url }}"></a>
+                    <a href="#"><img class="avatar-md" src="{{ question.user.profile.avatar.url }}"></a>
                     {% include 'questions/includes/rating_form.html' with rating=question.rating action='#' %}
                 </td>
                 <td>

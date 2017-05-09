@@ -2,5 +2,8 @@
 {% block title %}Форма регистрации{% endblock %}
 {% block header %}Форма регистрации{% endblock %}
 {% block content %}
-    {% include 'questions/includes/form.html' with action='signup' method='POST' is_columns=True button='Регистрация' %}
+    <form action="{% url 'signup' %}?continue={{ continue_url }}" method="POST" enctype="multipart/form-data">
+        {% include 'questions/includes/form.html' with is_columns=True %}
+        <button type="submit" class="btn btn-primary">Регистрация</button>
+    </form>
 {% endblock %}

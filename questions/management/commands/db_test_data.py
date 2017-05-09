@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.core.management.base import BaseCommand, CommandError
-from questions.models import Profile, Question, Tag, Answer, QuestionLike, AnswerLike
+from questions.models import User, Question, Tag, Answer, QuestionLike, AnswerLike
 import random
 import time
 
@@ -8,21 +8,20 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # Создание пользователей
         for i in range(0, 30):
-            Profile(
-                first_name=random.choice(
-                    ["Александр", "Саша", "Петя", "Вася", "Иван", "Маша", "Даша", "Нина", "Макс", "Артём", "Никита"]
-                ),
-                last_name=random.choice(
-                    ["Кирьяненко", "Иванов", "Петров", "Сидоров", "Хирный", "Колотовкин", "Куклина", "Попов", "Самарёв"]
-                ),
+            user = User.objects.create_user(
+                random.choice(
+                    ["kiryanenko", "alex", "username", "sidor", "krot", "qwerty", "samsa", 'super', 'hitryy', 'grenom']
+                ) + str(i) + '_' + str(time.time()),
+                password="123456",
                 email=str(i) + '_' + str(time.time()) + random.choice(
                     ["kiryanenkoav@mail.ru", "alex@mail.ru", "petrov@mail.ru", "qwerty@mail.ru", "krot@mail.ru"]
-                ),
-                username=random.choice(
+                )
+            )
+            user.profile.nick_name = random.choice(
                     ["kiryanenko", "alex", "username", "sidor", "krot", "qwerty", "samsa", 'super', 'hitryy', 'grenom']
-                ) + str(i) + '_' + str(time.time())
-            ).save()
-        users = Profile.objects.all()
+                )
+            user.save()
+        users = User.objects.all()
 
         # Создание тегов
         for i in range(0, 30):

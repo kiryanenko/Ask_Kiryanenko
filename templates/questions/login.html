@@ -2,25 +2,9 @@
 {% block title %}Форма авторизации{% endblock %}
 {% block header %}Форма авторизации{% endblock %}
 {% block content %}
-    {% include 'questions/includes/form.html' with action='login' method='POST' is_columns=True button='Регистрация' %}
-    <div class="alert alert-danger" role="alert">
-        <strong>Oh snap!</strong> Change a few things up and try submitting again.
-    </div>
-
-    <form>
-        <div class="form-group row">
-            <label class="col-md-2 col-form-label">Логин</label>
-            <div class="col-md-5">
-                <input type="text" class="form-control" maxlength="100" placeholder="Введите Ваш логин">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-2 col-form-label">Пароль</label>
-            <div class="col-md-5">
-                <input type="password" class="form-control" maxlength="100" placeholder="Введите Ваш пароль">
-            </div>
-        </div>
+    <form action="{% url 'login' %}?continue={{ continue_url }}" method="POST">
+        {% include 'questions/includes/form.html' with is_columns=True %}
         <button type="submit" class="btn btn-primary">Войти</button>
-        <a href="signup" class="btn btn-link">Регистрация</a>
+        <a href="{% url 'signup' %}?continue={{ continue_url }}" class="btn btn-link">Регистрация</a>
     </form>
 {% endblock %}
