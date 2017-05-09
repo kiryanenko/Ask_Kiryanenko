@@ -4,6 +4,11 @@
 {% block content %}
     <form action="{% url 'settings' %}?continue={{ continue_url }}" method="POST" enctype="multipart/form-data">
         {% include 'questions/includes/form.html' with is_columns=True %}
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6"><img class="avatar-lg" src="{{ request.user.profile.avatar.url }}"></div>
+        </div>
+        <br>
         <button type="submit" class="btn btn-primary">Изменить</button>
     </form>
 {% endblock %}

@@ -136,20 +136,18 @@ def logout(request):
 
 @login_required
 def settings(request):
-    url = get_continue(request)
     user = request.user
     if request.method == "POST":
         form = UserSettingsForm(user, request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(url)
+            return HttpResponseRedirect('/settings')
     else:
         form = UserSettingsForm(user, initial={'email': user.email,
                                                'nick_name': user.profile.nick_name,
                                                'avatar': user.profile.avatar})
     return render(request, 'questions/settings.html', {
         'form': form,
-        'continue_url': url
     })
 
 

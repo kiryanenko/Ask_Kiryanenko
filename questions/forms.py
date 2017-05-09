@@ -73,7 +73,7 @@ class UserSettingsForm(forms.Form):
     email = forms.EmailField(label='E-mail')
     nick_name = forms.CharField(max_length=20, label='Ник',
                                 help_text='Будет отображаться в вопросахи и ответах. Ник должен быть меньше 20 символов.')
-    avatar = forms.ImageField(label='Аватар', required=False)
+    avatar = forms.ImageField(widget=forms.FileInput, label='Аватар', required=False)
 
     def __init__(self, user, *args, **kwargs):
         self._user = user
