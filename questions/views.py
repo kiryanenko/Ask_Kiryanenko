@@ -2,7 +2,7 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.http import HttpResponseBadRequest, HttpResponseNotFound, Http404, HttpResponseRedirect
 from questions.models import Question, Tag
-from questions.forms import SignUpForm, LoginForm, UserSettingsForm
+from questions.forms import SignUpForm, LoginForm, UserSettingsForm, AskForm
 from django.core.paginator import Paginator, EmptyPage
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import auth
@@ -81,7 +81,16 @@ def tag(request, tag_name=None):
 
 # Форма создания вопроса (URL = /ask/)
 def ask(request):
-    return render(request, 'questions/ask.html', {})
+    if request.method == "POST":
+        form = AskForm(request.user, request.POST)
+        if form.is_valid():
+            question = form.save()
+            return HttpResponseRedirect('/question/' + str(question.pk))
+    else:
+        form = AskForm(request.user)
+    return render(request, 'questions/ask.html', {
+        'form': form,
+    })
 
 
 # Cтраница одного вопроса со списком ответов (URL = /question/35/)

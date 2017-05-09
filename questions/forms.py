@@ -87,3 +87,34 @@ class UserSettingsForm(forms.Form):
         if user_kw['avatar']:
             self._user.profile.avatar = user_kw['avatar']
         self._user.save()
+
+
+class AskForm(forms.Form):
+    title = forms.CharField(max_length=200, label='Заголовок вопроса',
+                            help_text='Вопрос должен быть меньше 100 символов, и оканчиваться знаком вопроса "?".')
+    text = forms.CharField(widget=forms.TextInput, label='Текст вопроса',
+                           help_text='Здесь можно указать описание Вашего вопроса.')
+    tags = forms.CharField(max_length=50, label='Теги к вопросу',
+                           help_text='Вы можете к вопросу добавить до трёх тегов. Вводить через запятую ",".')
+
+    def __init__(self, user, *args, **kwargs):
+        self._user = user
+        super(AskForm, self).__init__(*args, **kwargs)
+        css_classes(self)
+
+    def clean_tags(self):
+        tags = self.cleaned_data['tags'].split(',')
+        if len(tags) > 3:
+            raise forms.ValidationError(u'Максимум 3 тега.', code='tags_count')
+        return tags
+
+    def save(self):
+        tag_names = self.cleaned_data['tags']
+        tags = []
+        for tag_name in tag_names:
+            tag, created = Tag.objects.get_or_create(name=tag_name)
+            tags.append(tag)
+        q = Question.objects.create(title=self.cleaned_data['title'], text=self.cleaned_data['text'], user=self._user)
+        for tag in tags:
+            q.tags.add(tag)
+        return q
