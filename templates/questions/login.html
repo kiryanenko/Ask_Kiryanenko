@@ -2,6 +2,7 @@
 {% block title %}Форма авторизации{% endblock %}
 {% block header %}Форма авторизации{% endblock %}
 {% block content %}
+    {% include 'questions/includes/form.html' with action='login' method='POST' is_columns=True button='Регистрация' %}
     <div class="alert alert-danger" role="alert">
         <strong>Oh snap!</strong> Change a few things up and try submitting again.
     </div>

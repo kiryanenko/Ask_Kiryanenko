@@ -2,9 +2,11 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.http import HttpResponseBadRequest, HttpResponseNotFound, Http404, HttpResponseRedirect
 from questions.models import Profile, Question, Tag
-from questions.forms import SignUpForm
+from questions.forms import SignUpForm, LoginForm
 from django.core.paginator import Paginator, EmptyPage
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib import auth
+import re
 
 
 # Функция пагинации
@@ -34,6 +36,12 @@ def paginate(request, objects_list, default_limit=10, pages_count=None):
         page_range = paginator.page_range[start: page.number + int(pages_count / 2)]
     return page, page_range
 
+
+def get_continue(request, default='/'):
+    url = request.GET.get('continue', default)
+    if re.match(r'^/|http://127\.0\.0\.', url):   # Защита от Open Redirect
+        return url
+    return default
 
 # Cписок новых вопросов (главная страница) (URL = /)
 def index(request):
@@ -90,7 +98,17 @@ def question(request, question_id=None):
 
 # Форма логина (URL = /login/)
 def login(request):
-    return render(request, 'questions/login.html', {})
+    url = get_continue(request)
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        user = form.auth()
+        if user is not None:
+            return HttpResponseRedirect(url)
+    else:
+        form = LoginForm()
+    return render(request, 'questions/login.html', {
+        'form': form
+    })
 
 
 # Форма регистрации (URL = /signup/)
@@ -99,13 +117,17 @@ def signup(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('login')
     else:
         form = SignUpForm()
     return render(request, 'questions/signup.html', {
         'form': form
     })
 
+
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect(get_continue(request))
 
 def hello_world(request):
     return render(request, 'questions/hello_world.html', {

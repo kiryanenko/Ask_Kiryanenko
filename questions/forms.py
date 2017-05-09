@@ -37,3 +37,16 @@ class SignUpForm(forms.Form):
         user = Profile(**user_kwargs)
         user.save()
         return user
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=20, label='Логин')
+    password = forms.CharField(widget=forms.PasswordInput, max_length=50, label='Пароль')
+
+    def __init__(self, *args, **kwargs):
+        print(kwargs)
+        super(LoginForm, self).__init__(*args, **kwargs)
+        css_classes(self)
+
+    def auth(self):
+        return authenticate(username='john', password='secret')
