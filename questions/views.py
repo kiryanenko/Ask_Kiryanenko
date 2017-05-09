@@ -2,12 +2,13 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.http import HttpResponseBadRequest, HttpResponseNotFound, Http404, HttpResponseRedirect
 from questions.models import Question, Tag
-from questions.forms import SignUpForm, LoginForm, UserSettingsForm, AskForm
+from questions.forms import SignUpForm, LoginForm, UserSettingsForm, AskForm, AnswerForm
 from django.core.paginator import Paginator, EmptyPage
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-import re
+from django.views.decorators.http import require_POST
+import re, math
 
 
 # Функция пагинации
@@ -80,6 +81,7 @@ def tag(request, tag_name=None):
 
 
 # Форма создания вопроса (URL = /ask/)
+@login_required
 def ask(request):
     if request.method == "POST":
         form = AskForm(request.user, request.POST)
@@ -96,13 +98,30 @@ def ask(request):
 # Cтраница одного вопроса со списком ответов (URL = /question/35/)
 def question(request, question_id=None):
     q = get_object_or_404(Question, id=question_id)
-    answers = q.answers.last_answers()
+    if request.method == "POST":
+        # Добавление ответа
+        form = AnswerForm(request.user, q, request.POST)
+        if form.is_valid():
+            new_answer = form.save()
+            answers = q.answers.hot_answers()
+            # Ищу индекс нового ответа
+            index = 1
+            for ans in answers:
+                if ans == new_answer:
+                    break
+                index += 1
+            page = math.ceil(index / 30)  # страница c новым ответом
+            return HttpResponseRedirect('/question/{}?page={}#answer_{}'.format(question_id, page, new_answer.pk))
+    else:
+        form = AnswerForm(request.user, q)
+    answers = q.answers.hot_answers()
     page, page_range = paginate(request, answers, default_limit=30, pages_count=7)
     return render(request, 'questions/question.html', {
         'question': q,
         'answers': page.object_list,
         'page': page,
         'page_range': page_range,
+        'form': form
     })
 
 

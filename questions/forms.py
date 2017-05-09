@@ -1,12 +1,12 @@
 from django import forms
-from questions.models import Question, Tag
+from questions.models import Question, Tag, Answer
 from django.contrib import auth
 from django.contrib.auth.models import User
 
 # Функция добавляющая css классы к полям формы
 def css_classes(form):
     for field in form:
-        if isinstance(field.field.widget, (forms.TextInput, forms.PasswordInput)):
+        if isinstance(field.field.widget, (forms.TextInput, forms.PasswordInput, forms.Textarea)):
             field.field.widget.attrs['class'] = 'form-control'
 
 
@@ -92,7 +92,7 @@ class UserSettingsForm(forms.Form):
 class AskForm(forms.Form):
     title = forms.CharField(max_length=200, label='Заголовок вопроса',
                             help_text='Вопрос должен быть меньше 100 символов, и оканчиваться знаком вопроса "?".')
-    text = forms.CharField(widget=forms.TextInput, label='Текст вопроса',
+    text = forms.CharField(widget=forms.Textarea, label='Текст вопроса',
                            help_text='Здесь можно указать описание Вашего вопроса.')
     tags = forms.CharField(max_length=50, label='Теги к вопросу',
                            help_text='Вы можете к вопросу добавить до трёх тегов. Вводить через запятую ",".')
@@ -118,3 +118,22 @@ class AskForm(forms.Form):
         for tag in tags:
             q.tags.add(tag)
         return q
+
+
+class AnswerForm(forms.Form):
+    text = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Напишите Ваш ответ здесь...', 'rows': 4}),
+                           label='')
+
+    def __init__(self, user, question, *args, **kwargs):
+        self._user = user
+        self._question = question
+        super(AnswerForm, self).__init__(*args, **kwargs)
+        css_classes(self)
+
+    def clean(self):
+        if not self._user.is_authenticated():
+            raise forms.ValidationError(u'Необходимо авторизоваться.', code='auth')
+
+    def save(self):
+        ans = Answer.objects.create(text=self.cleaned_data['text'], user=self._user, question=self._question)
+        return ans

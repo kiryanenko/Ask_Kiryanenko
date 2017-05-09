@@ -16,6 +16,7 @@
 
     {% if answers|length > 0 %}
         {% for answer in answers %}
+            <a name="answer_{{ answer.pk }}"></a>
             <div class="card my-2">
                 <div class="card-block">
                     <table class="w-100"><tr>
@@ -43,10 +44,16 @@
         <hr>
     {% endif %}
 
-    <form>
-        <div class="form-group">
-            <textarea class="form-control" rows="3" placeholder="Напишите Ваш ответ здесь..."></textarea>
-        </div>
+    {% if request.user.is_authenticated %}
+    <a name="answer-form"></a>
+    <form action="{{ request.get_full_path }}#answer-form" method="POST">
+        {% include 'questions/includes/form.html' %}
         <button type="submit" class="btn btn-primary">Ответить</button>
     </form>
+    {% else %}
+        <p>
+            Чтобы ответить необходимо пройти
+            <a href="{% url 'login' %}?continue={{ request.get_full_path }}">авторизацию</a>
+        </p>
+    {% endif %}
 {% endblock %}

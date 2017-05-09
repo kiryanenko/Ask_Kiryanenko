@@ -7,7 +7,9 @@
 {% csrf_token %}
 {% for field in form %}
     <div class="form-group {% if is_columns %}row{% endif %} {% if field.errors %}has-danger{% endif %}">
-        <label class="{% if is_columns %}col-md-3{% endif %} col-form-label">{{ field.label }}</label>
+        {% if field.label != '' %}
+            <label class="{% if is_columns %}col-md-3{% endif %} col-form-label">{{ field.label }}</label>
+        {% endif %}
         <div class="{% if is_columns %}col-md-6{% endif %}">
             {{ field }}
 

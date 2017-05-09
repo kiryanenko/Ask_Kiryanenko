@@ -34,7 +34,7 @@ class QuestionManager(models.Manager):
         return self.order_by('-created_at')
 
     def hot_questions(self):
-        return self.order_by('-rating')
+        return self.order_by('-rating', '-created_at')
 
 
 class Question(models.Model):
@@ -53,8 +53,8 @@ class Question(models.Model):
 
 
 class AnswerManager(models.Manager):
-    def last_answers(self):
-        return self.order_by('-created_at')
+    def hot_answers(self):
+        return self.order_by('-rating', '-created_at')
 
 
 class Answer(models.Model):
