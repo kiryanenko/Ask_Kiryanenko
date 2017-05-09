@@ -1,0 +1,9 @@
+{% extends "questions/base.html" %}
+{% block title %}Настройка пользователя{% endblock %}
+{% block header %}Настройка пользователя: {{ reqest.user }}{% endblock %}
+{% block content %}
+    <form action="{% url 'settings' %}?continue={{ continue_url }}" method="POST" enctype="multipart/form-data">
+        {% include 'questions/includes/form.html' with is_columns=True %}
+        <button type="submit" class="btn btn-primary">Изменить</button>
+    </form>
+{% endblock %}

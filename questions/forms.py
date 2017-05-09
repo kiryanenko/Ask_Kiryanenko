@@ -22,7 +22,6 @@ class SignUpForm(forms.Form):
     avatar = forms.ImageField(label='Аватар', required=False)
 
     def __init__(self, *args, **kwargs):
-        print(kwargs)
         super(SignUpForm, self).__init__(*args, **kwargs)
         css_classes(self)
 
@@ -58,7 +57,6 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput, max_length=50, label='Пароль')
 
     def __init__(self, *args, **kwargs):
-        print(kwargs)
         super(LoginForm, self).__init__(*args, **kwargs)
         css_classes(self)
 
@@ -69,3 +67,23 @@ class LoginForm(forms.Form):
 
     def auth(self):
         return auth.authenticate(username=self.cleaned_data['username'], password=self.cleaned_data['password'])
+
+
+class UserSettingsForm(forms.Form):
+    email = forms.EmailField(label='E-mail')
+    nick_name = forms.CharField(max_length=20, label='Ник',
+                                help_text='Будет отображаться в вопросахи и ответах. Ник должен быть меньше 20 символов.')
+    avatar = forms.ImageField(label='Аватар', required=False)
+
+    def __init__(self, user, *args, **kwargs):
+        self._user = user
+        super(UserSettingsForm, self).__init__(*args, **kwargs)
+        css_classes(self)
+
+    def save(self):
+        user_kw = self.cleaned_data
+        self._user.email = user_kw['email']
+        self._user.profile.nick_name = user_kw['nick_name']
+        if user_kw['avatar']:
+            self._user.profile.avatar = user_kw['avatar']
+        self._user.save()

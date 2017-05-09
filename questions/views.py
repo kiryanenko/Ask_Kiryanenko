@@ -2,10 +2,11 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.http import HttpResponseBadRequest, HttpResponseNotFound, Http404, HttpResponseRedirect
 from questions.models import Question, Tag
-from questions.forms import SignUpForm, LoginForm
+from questions.forms import SignUpForm, LoginForm, UserSettingsForm
 from django.core.paginator import Paginator, EmptyPage
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 import re
 
 
@@ -131,6 +132,26 @@ def signup(request):
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect(get_continue(request))
+
+
+@login_required
+def settings(request):
+    url = get_continue(request)
+    user = request.user
+    if request.method == "POST":
+        form = UserSettingsForm(user, request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(url)
+    else:
+        form = UserSettingsForm(user, initial={'email': user.email,
+                                               'nick_name': user.profile.nick_name,
+                                               'avatar': user.profile.avatar})
+    return render(request, 'questions/settings.html', {
+        'form': form,
+        'continue_url': url
+    })
+
 
 def hello_world(request):
     return render(request, 'questions/hello_world.html', {

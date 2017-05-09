@@ -39,7 +39,7 @@
                     <a class="nav-link dropdown-toggle dropdown-toggle-split" id="accaunt" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="true"><span class="sr-only">Toggle Dropdown</span></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accaunt">
-                        <a class="dropdown-item" href="#">Настройки</a>
+                        <a class="dropdown-item" href="{% url 'settings' %}?continue={{ request.path }}">Настройки</a>
                         <a class="dropdown-item" href="{% url 'logout' %}?continue={{ request.path }}">Выйти</a>
                     </div>
                 {% else %}
