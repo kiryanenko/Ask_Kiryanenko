@@ -49,10 +49,14 @@ class Question(models.Model):
     objects = QuestionManager()
 
     def update_rating(self):
+        self.rating = 0
         for like in self.questionlike_set.all():
             self.rating += 1 if like.is_like else -1
         self.save()
         return self.rating
+
+    def liked_users(self):
+        return User.objects.filter(questionlike__question=self)
 
     def __str__(self):
         return '{}; user: {}; updated_at: {}'.format(self.title, self.user, self.updated_at)
@@ -73,10 +77,14 @@ class Answer(models.Model):
     objects = AnswerManager()
 
     def update_rating(self):
+        self.rating = 0
         for like in self.answerlike_set:
             self.rating += 1 if like.is_like else -1
         self.save()
         return self.rating
+
+    def liked_users(self):
+        return User.objects.filter(answerlike__answer=self)
 
     def __str__(self):
         return '{}; updated_at: {}; {}'.format(self.user, self.updated_at, self.text)

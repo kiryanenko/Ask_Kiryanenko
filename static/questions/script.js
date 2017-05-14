@@ -18,9 +18,10 @@ var csrftoken = getCookie('csrftoken');
 function putLike(url, isLike, rating_id)
 {
     var form = document.getElementById(rating_id);
-    var like = document.getElementById('like_' + rating_id);
-    var dislike = document.getElementById('dislike_' + rating_id);
-    var request = $.ajax({
+    var rating= form.getElementsByClassName('rating-input')[0];
+    var like = form.getElementsByClassName('rating-like')[0];
+    var dislike = form.getElementsByClassName('rating-dislike')[0];
+    $.ajax({
         url: url,
         type: 'POST',
         data: { is_like: isLike, csrfmiddlewaretoken: csrftoken },
