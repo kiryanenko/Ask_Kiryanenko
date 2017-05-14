@@ -5,7 +5,7 @@
     <table class="w-100"><tr>
         <td class="pr-2 text-center" style="width: 160px;">
             <img class="avatar-lg" src="{{ question.user.profile.avatar.url }}">
-            {% include 'questions/includes/rating_form.html' with rating=question.rating action='question_like' pk=question.pk prefix='question_rating_' liked_users=question.liked_users %}
+            {% include 'questions/includes/rating_form.html' with rating=question.rating action='question_like' pk=question.pk prefix='question_rating_' liked_users=question.liked_users disliked_users=question.disliked_users %}
         </td>
         <td>
             <p class="card-text">{{ question.text }}</p>
@@ -22,19 +22,22 @@
                     <table class="w-100"><tr>
                         <td class="pr-2 text-center" style="width: 100px;">
                             <a href="#"><img class="avatar-md" src="{{ answer.user.profile.avatar.url }}"></a>
-                            {% include 'questions/includes/rating_form.html' with rating=answer.rating action='answer_like' pk=answer.pk prefix='answer_rating_' liked_users=answer.liked_users %}
+                            {% include 'questions/includes/rating_form.html' with rating=answer.rating action='answer_like' pk=answer.pk prefix='answer_rating_' liked_users=answer.liked_users disliked_users=answer.disliked_users %}
                         </td>
                         <td class="pl-2">
                             <p class="card-text">{{ answer.text }}</p>
-                            <form>
+                            {% if question.correct_answer == answer or question.user == request.user and not question.correct_answer %}
                                 <div class="form-group has-success">
                                     <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input">
+                                        <input type="checkbox" class="custom-control-input"
+                                               onclick=""
+                                               {% if question.user != request.user or not question.correct_answer %}disabled{% endif %}
+                                               {% if question.correct_answer == answer %}checked{% endif %}>
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">Верно!</span>
                                     </label>
                                 </div>
-                            </form>
+                            {% endif %}
                         </td>
                     </tr></table>
                 </div>

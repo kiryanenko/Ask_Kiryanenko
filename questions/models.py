@@ -56,7 +56,15 @@ class Question(models.Model):
         return self.rating
 
     def liked_users(self):
-        return User.objects.filter(questionlike__question=self)
+        return User.objects.filter(questionlike__question=self, questionlike__is_like=True)
+
+    def disliked_users(self):
+        return User.objects.filter(questionlike__question=self, questionlike__is_like=False)
+
+    def choose_correct_answer(self, answer):
+        if answer in self.answers:
+            self.correct_answer = answer
+            self.save()
 
     def __str__(self):
         return '{}; user: {}; updated_at: {}'.format(self.title, self.user, self.updated_at)
@@ -84,7 +92,10 @@ class Answer(models.Model):
         return self.rating
 
     def liked_users(self):
-        return User.objects.filter(answerlike__answer=self)
+        return User.objects.filter(answerlike__answer=self, answerlike__is_like=True)
+
+    def disliked_users(self):
+        return User.objects.filter(answerlike__answer=self, answerlike__is_like=False)
 
     def __str__(self):
         return '{}; updated_at: {}; {}'.format(self.user, self.updated_at, self.text)
@@ -92,31 +103,29 @@ class Answer(models.Model):
 
 class QuestionLikeManager(models.Manager):
     def like(self, user, question, is_like):
-        if question.questionlike_set.filter(user=user).exists():
-            return None
-        else:
-            self.create(user=user, question=question, is_like=is_like)
-            return question.update_rating()
+        like, is_create = self.get_or_create(user=user, question=question)
+        like.is_like = is_like
+        like.save()
+        return question.update_rating()
 
 
 class QuestionLike(models.Model):
     user = models.ForeignKey(User)
     question = models.ForeignKey(Question)
-    is_like = models.BooleanField()
+    is_like = models.BooleanField(default=True)
     objects = QuestionLikeManager()
 
 
 class AnswerLikeManager(models.Manager):
     def like(self, user, answer, is_like):
-        if answer.answerlike_set.filter(user=user).exists():
-            return None
-        else:
-            self.create(user=user, answer=answer, is_like=is_like)
-            return answer.update_rating()
+        like, is_create = self.get_or_create(user=user, answer=answer)
+        like.is_like = is_like
+        like.save()
+        return answer.update_rating()
 
 
 class AnswerLike(models.Model):
     user = models.ForeignKey(User)
     answer = models.ForeignKey(Answer)
-    is_like = models.BooleanField()
+    is_like = models.BooleanField(default=True)
     objects = AnswerLikeManager()

@@ -229,6 +229,14 @@ def answer_like(request, answer_id=None):
         return HttpResponseAjaxError(code="like_exist", message='Вы уже лайкнули этот ответ.')
 
 
+@login_required_ajax
+def correct_answer(request, question_id=None):
+    q = get_object_or_404(Question, id=question_id)
+    answer = get_object_or_404(Answer, id=request.POST.get('answer_id', 0))
+    q.choose_correct_answer(answer)
+    return HttpResponseAjax()
+
+
 def hello_world(request):
     return render(request, 'questions/hello_world.html', {
         'GET': request.GET,

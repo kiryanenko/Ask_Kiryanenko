@@ -1,14 +1,14 @@
 <div class="input-group input-group-sm mt-2" id="{{ prefix }}{{ pk }}">
     <span class="input-group-btn">
-        <button class="btn btn-outline-danger rating-like" type="button"
+        <button class="btn btn-outline-danger rating-dislike" type="button"
                 onclick="putLike('{% url action pk %}', 0, '{{ prefix }}{{ pk }}');"
-                {% if not request.user.is_authenticated or request.user in liked_users %}disabled{% endif %}>-</button>
+                {% if not request.user.is_authenticated or request.user in disliked_users %}disabled{% endif %}>-</button>
     </span>
     <input type="text" class="form-control rating-input text-center
                     {% if rating >= 0 %}text-success{% else %}text-danger{% endif %}"
            value="{{ rating }}" disabled>
     <span class="input-group-btn">
-        <button class="btn btn-outline-success rating-dislike" type="button"
+        <button class="btn btn-outline-success rating-like" type="button"
                 onclick="putLike('{% url action pk %}', 1, '{{ prefix }}{{ pk }}');"
                 {% if not request.user.is_authenticated or request.user in liked_users %}disabled{% endif %}>+</button>
     </span>
