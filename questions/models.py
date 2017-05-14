@@ -78,7 +78,7 @@ class Answer(models.Model):
 
     def update_rating(self):
         self.rating = 0
-        for like in self.answerlike_set:
+        for like in self.answerlike_set.all():
             self.rating += 1 if like.is_like else -1
         self.save()
         return self.rating

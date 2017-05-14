@@ -5,7 +5,7 @@
     <table class="w-100"><tr>
         <td class="pr-2 text-center" style="width: 160px;">
             <img class="avatar-lg" src="{{ question.user.profile.avatar.url }}">
-            {% include 'questions/includes/rating_form.html' with rating=question.rating action='#' %}
+            {% include 'questions/includes/rating_form.html' with rating=question.rating action='question_like' pk=question.pk prefix='question_rating_' liked_users=question.liked_users %}
         </td>
         <td>
             <p class="card-text">{{ question.text }}</p>
@@ -22,7 +22,7 @@
                     <table class="w-100"><tr>
                         <td class="pr-2 text-center" style="width: 100px;">
                             <a href="#"><img class="avatar-md" src="{{ answer.user.profile.avatar.url }}"></a>
-                            {% include 'questions/includes/rating_form.html' with rating=answer.rating action='#' %}
+                            {% include 'questions/includes/rating_form.html' with rating=answer.rating action='answer_like' pk=answer.pk prefix='answer_rating_' liked_users=answer.liked_users %}
                         </td>
                         <td class="pl-2">
                             <p class="card-text">{{ answer.text }}</p>

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.http import HttpResponseBadRequest, HttpResponseNotFound, Http404, HttpResponseRedirect
-from questions.models import Question, Tag, QuestionLike, AnswerLike
+from questions.models import Question, Tag, QuestionLike, AnswerLike, Answer
 from questions.forms import SignUpForm, LoginForm, UserSettingsForm, AskForm, AnswerForm
 from django.core.paginator import Paginator, EmptyPage
 from django.core.exceptions import ObjectDoesNotExist
@@ -216,6 +216,17 @@ def question_like(request, question_id=None):
         return HttpResponseAjax(rating=rating)
     else:
         return HttpResponseAjaxError(code="like_exist", message='Вы уже лайкнули этот вопрос.')
+
+
+@login_required_ajax
+def answer_like(request, answer_id=None):
+    q = get_object_or_404(Answer, id=answer_id)
+    is_like = request.POST.get('is_like', False)
+    rating = AnswerLike.objects.like(request.user, q, is_like)
+    if rating is not None:
+        return HttpResponseAjax(rating=rating)
+    else:
+        return HttpResponseAjaxError(code="like_exist", message='Вы уже лайкнули этот ответ.')
 
 
 def hello_world(request):
