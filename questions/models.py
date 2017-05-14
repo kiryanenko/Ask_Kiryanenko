@@ -62,7 +62,7 @@ class Question(models.Model):
         return User.objects.filter(questionlike__question=self, questionlike__is_like=False)
 
     def choose_correct_answer(self, answer):
-        if answer in self.answers:
+        if answer in self.answers.all():
             self.correct_answer = answer
             self.save()
 
