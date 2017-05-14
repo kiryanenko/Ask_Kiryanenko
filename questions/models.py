@@ -48,6 +48,12 @@ class Question(models.Model):
     correct_answer = models.OneToOneField('Answer', related_name='+', null=True, blank=True)
     objects = QuestionManager()
 
+    def update_rating(self):
+        for like in self.questionlike_set.all():
+            self.rating += 1 if like.is_like else -1
+        self.save()
+        return self.rating
+
     def __str__(self):
         return '{}; user: {}; updated_at: {}'.format(self.title, self.user, self.updated_at)
 
@@ -66,16 +72,43 @@ class Answer(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     objects = AnswerManager()
 
+    def update_rating(self):
+        for like in self.answerlike_set:
+            self.rating += 1 if like.is_like else -1
+        self.save()
+        return self.rating
+
     def __str__(self):
         return '{}; updated_at: {}; {}'.format(self.user, self.updated_at, self.text)
+
+
+class QuestionLikeManager(models.Manager):
+    def like(self, user, question, is_like):
+        if question.questionlike_set.filter(user=user).exists():
+            return None
+        else:
+            self.create(user=user, question=question, is_like=is_like)
+            return question.update_rating()
 
 
 class QuestionLike(models.Model):
     user = models.ForeignKey(User)
     question = models.ForeignKey(Question)
     is_like = models.BooleanField()
+    objects = QuestionLikeManager()
+
+
+class AnswerLikeManager(models.Manager):
+    def like(self, user, answer, is_like):
+        if answer.answerlike_set.filter(user=user).exists():
+            return None
+        else:
+            self.create(user=user, answer=answer, is_like=is_like)
+            return answer.update_rating()
+
 
 class AnswerLike(models.Model):
     user = models.ForeignKey(User)
     answer = models.ForeignKey(Answer)
     is_like = models.BooleanField()
+    objects = AnswerLikeManager()

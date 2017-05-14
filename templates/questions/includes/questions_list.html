@@ -4,7 +4,7 @@
             <table class="w-100"><tr>
                 <td class="pr-2 text-center" style="width: 100px;">
                     <a href="#"><img class="avatar-md" src="{{ question.user.profile.avatar.url }}"></a>
-                    {% include 'questions/includes/rating_form.html' with rating=question.rating action='#' %}
+                    {% include 'questions/includes/rating_form.html' with rating=question.rating action='question_like' pk=question.pk rating_id='question_rating_' %}
                 </td>
                 <td>
                     <a href="{% url 'question' question.id %}">

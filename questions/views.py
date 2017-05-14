@@ -1,14 +1,39 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.http import HttpResponseBadRequest, HttpResponseNotFound, Http404, HttpResponseRedirect
-from questions.models import Question, Tag
+from questions.models import Question, Tag, QuestionLike, AnswerLike
 from questions.forms import SignUpForm, LoginForm, UserSettingsForm, AskForm, AnswerForm
 from django.core.paginator import Paginator, EmptyPage
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-import re, math
+import re
+import math
+import json
+
+
+class HttpResponseAjax(HttpResponse):
+    def __init__(self, status='ok', **kwargs):
+        kwargs['status'] = status
+        super(HttpResponseAjax, self).__init__(content=json.dumps(kwargs), content_type='application/json')
+
+
+class HttpResponseAjaxError(HttpResponseAjax):
+    def __init__(self, code, message):
+        super(HttpResponseAjaxError, self).__init__(status='error', code=code, message=message)
+
+
+# Проверка авторизации в AJAX
+def login_required_ajax(view):
+    def view2(request, *args, **kwargs):
+        if request.user.is_authenticated():
+            return view(request, *args, **kwargs)
+        elif request.is_ajax():
+            return HttpResponseAjaxError(code="no_auth", message=u'Требуется авторизация')
+        else:
+            HttpResponseRedirect('/login/?continue=' + get_continue(request))
+    return view2
 
 
 # Функция пагинации
@@ -81,7 +106,7 @@ def tag(request, tag_name=None):
 
 
 # Форма создания вопроса (URL = /ask/)
-@login_required
+@login_required(login_url='/login', redirect_field_name='continue')
 def ask(request):
     if request.method == "POST":
         form = AskForm(request.user, request.POST)
@@ -97,6 +122,7 @@ def ask(request):
 
 # Cтраница одного вопроса со списком ответов (URL = /question/35/)
 def question(request, question_id=None):
+    COUNT_ON_PAGE = 30
     q = get_object_or_404(Question, id=question_id)
     if request.method == "POST":
         # Добавление ответа
@@ -110,12 +136,12 @@ def question(request, question_id=None):
                 if ans == new_answer:
                     break
                 index += 1
-            page = math.ceil(index / 30)  # страница c новым ответом
+            page = math.ceil(index / COUNT_ON_PAGE)  # страница c новым ответом
             return HttpResponseRedirect('/question/{}?page={}#answer_{}'.format(question_id, page, new_answer.pk))
     else:
         form = AnswerForm(request.user, q)
     answers = q.answers.hot_answers()
-    page, page_range = paginate(request, answers, default_limit=30, pages_count=7)
+    page, page_range = paginate(request, answers, default_limit=COUNT_ON_PAGE, pages_count=7)
     return render(request, 'questions/question.html', {
         'question': q,
         'answers': page.object_list,
@@ -162,7 +188,7 @@ def logout(request):
     return HttpResponseRedirect(get_continue(request))
 
 
-@login_required
+@login_required(login_url='/login', redirect_field_name='continue')
 def settings(request):
     user = request.user
     if request.method == "POST":
@@ -177,6 +203,19 @@ def settings(request):
     return render(request, 'questions/settings.html', {
         'form': form,
     })
+
+
+# Лайк (дизлайк) вопроса.
+# На сервер передаются параметры: id вопроса, тип (лайк / дизлайк). Возвращается: новый рейтинг вопроса или код ошибки.
+@login_required_ajax
+def question_like(request, question_id=None):
+    q = get_object_or_404(Question, id=question_id)
+    is_like = request.POST.get('is_like', False)
+    rating = QuestionLike.objects.like(request.user, q, is_like)
+    if rating is not None:
+        return HttpResponseAjax(rating=rating)
+    else:
+        return HttpResponseAjaxError(code="like_exist", message='Вы уже лайкнули этот вопрос.')
 
 
 def hello_world(request):
