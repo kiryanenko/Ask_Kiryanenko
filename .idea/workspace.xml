@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="78e0cc60-d580-46af-9ee6-ab02e59d1092" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/questions/models.py" afterPath="$PROJECT_DIR$/questions/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/questions/urls.py" afterPath="$PROJECT_DIR$/questions/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/questions/script.js" afterPath="$PROJECT_DIR$/static/questions/script.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/questions/views.py" afterPath="$PROJECT_DIR$/questions/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/questions/question.html" afterPath="$PROJECT_DIR$/templates/questions/question.html" />
     </list>
     <ignored path=".idea/dataSources.xml" />
@@ -51,11 +49,11 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/questions/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="548">
-              <caret line="237" column="0" lean-forward="false" selection-start-line="237" selection-start-column="0" selection-end-line="237" selection-end-column="0" />
+            <state relative-caret-position="494">
+              <caret line="239" column="0" lean-forward="true" selection-start-line="239" selection-start-column="0" selection-end-line="239" selection-end-column="0" />
               <folding>
                 <element signature="e#24#92#0" expanded="true" />
-                <marker date="1494800702183" expanded="true" signature="24:73" ph="import ..." />
+                <marker date="1494806294812" expanded="true" signature="24:73" ph="import ..." />
               </folding>
             </state>
           </provider>
@@ -74,8 +72,8 @@
       <file leaf-file-name="question.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/questions/question.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="33" column="90" lean-forward="false" selection-start-line="33" selection-start-column="90" selection-end-line="33" selection-end-column="90" />
+            <state relative-caret-position="221">
+              <caret line="19" column="96" lean-forward="true" selection-start-line="19" selection-start-column="76" selection-end-line="19" selection-end-column="96" />
               <folding />
             </state>
           </provider>
@@ -95,7 +93,7 @@
         <entry file="file://$PROJECT_DIR$/questions/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="294">
-              <caret line="16" column="56" lean-forward="true" selection-start-line="16" selection-start-column="56" selection-end-line="16" selection-end-column="56" />
+              <caret line="16" column="56" lean-forward="false" selection-start-line="16" selection-start-column="56" selection-end-line="16" selection-end-column="56" />
               <folding />
             </state>
           </provider>
@@ -177,12 +175,12 @@
         <option value="$PROJECT_DIR$/questions/forms.py" />
         <option value="$PROJECT_DIR$/Ask_Kiryanenko/urls.py" />
         <option value="$PROJECT_DIR$/templates/questions/base.html" />
-        <option value="$PROJECT_DIR$/questions/views.py" />
         <option value="$PROJECT_DIR$/templates/questions/includes/questions_list.html" />
         <option value="$PROJECT_DIR$/templates/questions/includes/rating_form.html" />
         <option value="$PROJECT_DIR$/questions/urls.py" />
         <option value="$PROJECT_DIR$/static/questions/script.js" />
         <option value="$PROJECT_DIR$/questions/models.py" />
+        <option value="$PROJECT_DIR$/questions/views.py" />
         <option value="$PROJECT_DIR$/templates/questions/question.html" />
       </list>
     </option>
@@ -862,7 +860,14 @@
       <option name="project" value="LOCAL" />
       <updated>1494803542762</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="correct_answer">
+      <created>1494805787794</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1494805787794</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -881,12 +886,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="-4" width="1608" height="1178" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298077" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329718" sideWeight="0.50426894" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20096155" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1923077" sideWeight="0.49573106" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1923077" sideWeight="0.49573106" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32884616" sideWeight="0.49786553" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3278846" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16430412" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -949,7 +955,8 @@
     <MESSAGE value="question like" />
     <MESSAGE value="answer like" />
     <MESSAGE value="user re-like" />
-    <option name="LAST_COMMIT_MESSAGE" value="user re-like" />
+    <MESSAGE value="correct_answer" />
+    <option name="LAST_COMMIT_MESSAGE" value="correct_answer" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -988,7 +995,7 @@
           <caret line="8" column="6" lean-forward="false" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
           <folding>
             <element signature="e#24#92#0" expanded="true" />
-            <marker date="1494800702183" expanded="true" signature="24:73" ph="import ..." />
+            <marker date="1494806294812" expanded="true" signature="24:73" ph="import ..." />
           </folding>
         </state>
       </provider>
@@ -1020,7 +1027,7 @@
           <caret line="8" column="6" lean-forward="false" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
           <folding>
             <element signature="e#24#92#0" expanded="true" />
-            <marker date="1494800702183" expanded="true" signature="24:73" ph="import ..." />
+            <marker date="1494806294812" expanded="true" signature="24:73" ph="import ..." />
           </folding>
         </state>
       </provider>
@@ -1045,7 +1052,7 @@
           <caret line="8" column="6" lean-forward="false" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
           <folding>
             <element signature="e#24#92#0" expanded="true" />
-            <marker date="1494800702183" expanded="true" signature="24:73" ph="import ..." />
+            <marker date="1494806294812" expanded="true" signature="24:73" ph="import ..." />
           </folding>
         </state>
       </provider>
@@ -1063,7 +1070,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#24#92#0" expanded="true" />
-            <marker date="1494800702183" expanded="true" signature="24:73" ph="import ..." />
+            <marker date="1494806294812" expanded="true" signature="24:73" ph="import ..." />
           </folding>
         </state>
       </provider>
@@ -1287,17 +1294,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/questions/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="548">
-          <caret line="237" column="0" lean-forward="false" selection-start-line="237" selection-start-column="0" selection-end-line="237" selection-end-column="0" />
-          <folding>
-            <element signature="e#24#92#0" expanded="true" />
-            <marker date="1494800702183" expanded="true" signature="24:73" ph="import ..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/questions/includes/rating_form.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -1317,7 +1313,7 @@
     <entry file="file://$PROJECT_DIR$/questions/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="294">
-          <caret line="16" column="56" lean-forward="true" selection-start-line="16" selection-start-column="56" selection-end-line="16" selection-end-column="56" />
+          <caret line="16" column="56" lean-forward="false" selection-start-line="16" selection-start-column="56" selection-end-line="16" selection-end-column="56" />
           <folding />
         </state>
       </provider>
@@ -1330,10 +1326,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/questions/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="239" column="0" lean-forward="true" selection-start-line="239" selection-start-column="0" selection-end-line="239" selection-end-column="0" />
+          <folding>
+            <element signature="e#24#92#0" expanded="true" />
+            <marker date="1494806294812" expanded="true" signature="24:73" ph="import ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/questions/question.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="33" column="90" lean-forward="false" selection-start-line="33" selection-start-column="90" selection-end-line="33" selection-end-column="90" />
+        <state relative-caret-position="221">
+          <caret line="19" column="96" lean-forward="true" selection-start-line="19" selection-start-column="76" selection-end-line="19" selection-end-column="96" />
           <folding />
         </state>
       </provider>

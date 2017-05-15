@@ -232,6 +232,8 @@ def answer_like(request, answer_id=None):
 @login_required_ajax
 def correct_answer(request, question_id=None):
     q = get_object_or_404(Question, id=question_id)
+    if request.user != q.user:
+        raise HttpResponseBadRequest
     answer = get_object_or_404(Answer, id=request.POST.get('answer_id', 0))
     q.choose_correct_answer(answer)
     return HttpResponseAjax()

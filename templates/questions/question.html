@@ -17,7 +17,7 @@
     {% if answers|length > 0 %}
         {% for answer in answers %}
             <a name="answer_{{ answer.pk }}"></a>
-            <div class="card my-2">
+            <div class="card my-2 {% if question.correct_answer == answer %}card-outline-success{% endif %}">
                 <div class="card-block">
                     <table class="w-100"><tr>
                         <td class="pr-2 text-center" style="width: 100px;">
