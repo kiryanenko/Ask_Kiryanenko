@@ -27,7 +27,7 @@ class HttpResponseAjaxError(HttpResponseAjax):
 # Проверка авторизации в AJAX
 def login_required_ajax(view):
     def view2(request, *args, **kwargs):
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             return view(request, *args, **kwargs)
         elif request.is_ajax():
             return HttpResponseAjaxError(code="no_auth", message=u'Требуется авторизация')
