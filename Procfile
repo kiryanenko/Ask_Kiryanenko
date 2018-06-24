@@ -1,0 +1,1 @@
+web: gunicorn Ask_Kiryanenko.wsgi --log-file -
