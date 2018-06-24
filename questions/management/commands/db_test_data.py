@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
-from django.core.management.base import BaseCommand, CommandError
-from questions.models import User, Question, Tag, Answer, QuestionLike, AnswerLike
 import random
 import time
 
+from django.core.management.base import BaseCommand
+
+from questions.models import User, Question, Tag, Answer, QuestionLike, AnswerLike
+
+
+# python manage.py db_test_data
 class Command(BaseCommand):
     def handle(self, *args, **options):
         # Создание пользователей
