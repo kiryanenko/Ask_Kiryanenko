@@ -25,7 +25,7 @@ SECRET_KEY = '+pt_aj4_0pwy*%%38=)_amx3i3f#p(a&s^f$g3f)46i5_uc4si'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [u'127.0.0.5', u'127.0.0.1']
+ALLOWED_HOSTS = [u'127.0.0.5', u'127.0.0.1', u'.herokuapp.com']
 
 
 # Application definition
@@ -78,9 +78,10 @@ WSGI_APPLICATION = 'Ask_Kiryanenko.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ask_kiryanenko',
-        'USER': 'ask_kiryanenko',
-        'PASSWORD': '123456',
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'NAME': os.environ.get('DB_NAME', 'ask_kiryanenko'),
+        'USER': os.environ.get('DB_USER', 'ask_kiryanenko'),
+        'PASSWORD': os.environ.get('DB_PWD', '123456'),
     }
 }
 
