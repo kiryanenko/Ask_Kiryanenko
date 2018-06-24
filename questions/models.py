@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
+from django.contrib.auth.models import User
 from django.db import models
-from django.contrib.auth.models import User, UserManager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -9,6 +9,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nick_name = models.CharField(max_length=20, blank=True)
     avatar = models.ImageField(upload_to='avatars', default='avatars/user.png')
+
 
 # определим сигналы, чтобы наша модель Profile автоматически обновлялась при создании/изменении данных модели User.
 @receiver(post_save, sender=User)
@@ -40,12 +41,12 @@ class QuestionManager(models.Manager):
 class Question(models.Model):
     title = models.CharField(max_length=200)
     text = models.TextField()
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField(Tag, null=True, blank=True)
-    correct_answer = models.OneToOneField('Answer', related_name='+', null=True, blank=True)
+    correct_answer = models.OneToOneField('Answer', related_name='+', null=True, blank=True, on_delete=models.CASCADE)
     objects = QuestionManager()
 
     def update_rating(self):
@@ -78,8 +79,8 @@ class AnswerManager(models.Manager):
 class Answer(models.Model):
     text = models.TextField()
     rating = models.IntegerField(default=0)
-    question = models.ForeignKey(Question, related_name='answers')
-    user = models.ForeignKey(User)
+    question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = AnswerManager()
@@ -110,8 +111,8 @@ class QuestionLikeManager(models.Manager):
 
 
 class QuestionLike(models.Model):
-    user = models.ForeignKey(User)
-    question = models.ForeignKey(Question)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
     is_like = models.BooleanField(default=True)
     objects = QuestionLikeManager()
 
@@ -125,7 +126,7 @@ class AnswerLikeManager(models.Manager):
 
 
 class AnswerLike(models.Model):
-    user = models.ForeignKey(User)
-    answer = models.ForeignKey(Answer)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
     is_like = models.BooleanField(default=True)
     objects = AnswerLikeManager()
