@@ -1,0 +1,30 @@
+<div id="answer_{{ answer.pk }}">
+    <a name="answer_{{ answer.pk }}"></a>
+    <div class="card my-2 {% if question.correct_answer == answer %}card-outline-success{% endif %}">
+        <div class="card-block">
+            <table class="w-100"><tr>
+                <td class="pr-2 text-center" style="width: 100px;">
+                    <a href="#"><img class="avatar-md" src="{{ answer.user.profile.avatar.url }}"></a>
+                    {% include 'questions/includes/rating_form.html' with rating=answer.rating action='answer_like' pk=answer.pk prefix='answer_rating_' liked_users=answer.liked_users disliked_users=answer.disliked_users %}
+                </td>
+                <td class="pl-2">
+                    <p class="card-text">{{ answer.text }}</p>
+                    {% if question.correct_answer == answer or question.user == request.user%}
+                        <div class="form-group {% if question.correct_answer == answer %}has-success{% endif %}">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input"
+                                       onclick="correctAnswer('{% url 'correct_answer' question.pk %}', {{ answer.pk }})"
+                                       {% if question.correct_answer == answer or question.user != request.user %}disabled{% endif %}
+                                       {% if question.correct_answer == answer %}checked{% endif %}>
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description correct_answer-description"
+                                      id="correct_answer-description-{{ answer.pk }}">
+                                            {% if question.correct_answer == answer %}Верно!{% else %}Пометить как верный.{% endif %}</span>
+                            </label>
+                        </div>
+                    {% endif %}
+                </td>
+            </tr></table>
+        </div>
+    </div>
+</div>

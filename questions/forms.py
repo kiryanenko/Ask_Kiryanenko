@@ -131,7 +131,7 @@ class AnswerForm(forms.Form):
         css_classes(self)
 
     def clean(self):
-        if not self._user.is_authenticated():
+        if not self._user.is_authenticated:
             raise forms.ValidationError(u'Необходимо авторизоваться.', code='auth')
 
     def save(self):

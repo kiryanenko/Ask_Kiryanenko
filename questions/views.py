@@ -1,16 +1,21 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, HttpResponse, get_object_or_404
-from django.http import HttpResponseBadRequest, HttpResponseNotFound, Http404, HttpResponseRedirect
-from questions.models import Question, Tag, QuestionLike, AnswerLike, Answer
-from questions.forms import SignUpForm, LoginForm, UserSettingsForm, AskForm, AnswerForm
-from django.core.paginator import Paginator, EmptyPage
-from django.core.exceptions import ObjectDoesNotExist
+import json
+import math
+import re
+
+import channels
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST
-import re
-import math
-import json
+from django.core.paginator import Paginator, EmptyPage
+from django.http import HttpResponseBadRequest, Http404, HttpResponseRedirect
+from django.shortcuts import render, HttpResponse, get_object_or_404
+
+from questions.forms import SignUpForm, LoginForm, UserSettingsForm, AskForm, AnswerForm
+from questions.models import Question, Tag, QuestionLike, AnswerLike, Answer
+
+channel_layer = get_channel_layer()
 
 
 class HttpResponseAjax(HttpResponse):
@@ -129,6 +134,12 @@ def question(request, question_id=None):
         form = AnswerForm(request.user, q, request.POST)
         if form.is_valid():
             new_answer = form.save()
+
+            async_to_sync(channel_layer.group_send)("question_%s" % question_id, {
+                'text': new_answer.text,
+                'type': 'new_answer'
+            })
+
             answers = q.answers.hot_answers()
             # Ищу индекс нового ответа
             index = 1

@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import Ask_Kiryanenko.routing
+import questions
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -38,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'questions',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +133,13 @@ STATICFILES_DIRS = (os.path.join('static'), )
 
 MEDIA_ROOT = os.path.join('uploads')
 MEDIA_URL = '/uploads/'
+
+
+# Channels
+ASGI_APPLICATION = "Ask_Kiryanenko.routing.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
