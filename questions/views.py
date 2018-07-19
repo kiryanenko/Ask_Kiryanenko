@@ -136,7 +136,9 @@ def question(request, question_id=None):
             new_answer = form.save()
 
             async_to_sync(channel_layer.group_send)("question_%s" % question_id, {
+                'id': new_answer.pk,
                 'text': new_answer.text,
+                'avatar': new_answer.user.profile.avatar.url,
                 'type': 'new_answer'
             })
 

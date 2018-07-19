@@ -14,23 +14,53 @@
     </tr></table>
     <hr>
 
-    {% if answers|length > 0 %}
-        {% for answer in answers %}
-            {% include 'questions/includes/answer.html' with answer=answer %}
-        {% endfor %}
-        {% include 'questions/includes/paginator.html' %}
-        <hr>
-    {% endif %}
-
+    <div id="answers">
+        {% if answers|length > 0 %}
+            {% for answer in answers %}
+                {% include 'questions/includes/answer.html' with answer=answer %}
+            {% endfor %}
+            {% include 'questions/includes/paginator.html' %}
+        {% endif %}
+    </div>
+    <hr>
 
     <script>
     let protocol = window.location.protocol === 'http:' ? 'ws:' : 'wss:';
     const chatSocket = new WebSocket(protocol + '//' + window.location.host + '/questions/' + {{ question.pk }} + '/');
 
-    chatSocket.onmessage = function(e) {
-        console.log(e.data);
-        const data = JSON.parse(e.data);
+    chatSocket.onmessage = function(event) {
+        const answer = JSON.parse(event.data);
 
+        const newAnswer = document.createElement('div');
+        newAnswer.id = 'answer_' + answer.id;
+        newAnswer.innerHTML =
+            '    <a name="answer_' + answer.id + '"></a>\n' +
+            '    <div class="card my-2 ">\n' +
+            '        <div class="card-block">\n' +
+            '            <table class="w-100"><tbody><tr>\n' +
+            '                <td class="pr-2 text-center" style="width: 100px;">\n' +
+            '                    <a href="#"><img class="avatar-md" src="' + answer.avatar + '"></a>\n' +
+            '                    <div class="input-group input-group-sm mt-2" id="answer_rating_' + answer.id + '">' +
+            '    <span class="input-group-btn">\n' +
+            '        <button class="btn btn-outline-danger rating-dislike" type="button" ' +
+            'onclick="putLike(\'/answer/' + answer.id + '/like\', 0, \'answer_rating_' + answer.id + '\');">-</button>' +
+            '    </span>\n' +
+            '    <input type="text" class="form-control rating-input text-center text-success" value="0" disabled="">' +
+            '    <span class="input-group-btn">\n' +
+            '        <button class="btn btn-outline-success rating-like" type="button" ' +
+            'onclick="putLike(\'/answer/' + answer.id + '/like\', 1, \'answer_rating_' + answer.id + '\');">+</button>' +
+            '    </span>\n' +
+            '</div>\n' +
+            '                </td>\n' +
+            '                <td class="pl-2">\n' +
+            '                    <p class="card-text">' + answer.text + '</p>\n' +
+            '                </td>\n' +
+            '            </tr></tbody></table>\n' +
+            '        </div>\n' +
+            '    </div>';
+
+        const answers = document.getElementById('answers');
+        answers.appendChild(newAnswer);
     };
 
     chatSocket.onclose = function(e) {
