@@ -4,5 +4,6 @@ mysqlclient==1.3.12
 Pillow==5.1.0
 pytz==2018.4
 channels
-asgiref
+asgiref==2.2.0
 channels_redis
+asgi_redis
